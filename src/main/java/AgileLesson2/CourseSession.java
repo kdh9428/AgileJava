@@ -11,6 +11,7 @@ import java.util.GregorianCalendar;
 /**
  * Provides a representation of a single-semester
  * session of a specific university course.
+ *
  * @author Administrator
  */
 public class CourseSession {
@@ -18,12 +19,13 @@ public class CourseSession {
     private String department;
     private String number;
 
-    ArrayList<Student> students = new ArrayList<Student>();
+    private ArrayList<Student> students = new ArrayList<Student>();
 
     private Date startDate;
 
     /**
      * Constructs a CourseSession starting on a specific date
+     *
      * @param startDate the date on which the CourseSession begins
      */
     public CourseSession(Date startDate) {
@@ -74,5 +76,9 @@ public class CourseSession {
 
     public Date getStartDate() {
         return startDate;
+    }
+
+    public ArrayList<Student> getAllStudents(){
+        return students;
     }
 }

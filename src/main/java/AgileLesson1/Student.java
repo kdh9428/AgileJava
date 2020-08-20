@@ -1,4 +1,4 @@
-package AgileEx1;
+package AgileLesson1;
 
 public class Student {
     private String name;
