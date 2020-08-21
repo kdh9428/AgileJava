@@ -1,12 +1,12 @@
-package AgileLesson2;
+package sis.studentinfo;
 
-import AgileLesson1.Student;
+import sis.studentinfo.Student;
+import sis.studentinfo.DateUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import sis.studentinfo.CourseSession;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -17,21 +17,8 @@ public class CourseSessionTest {
 
     @BeforeEach
     public void setUp() {
-        startDate = createDate(2003, 1, 6);
+        startDate = new DateUtil().createDate(2003, 1, 6);
         session = new CourseSession("ENGL", "101", startDate);
-    }
-
-    private Date createDate(int year, int month, int date) {
-
-        GregorianCalendar calendar = new GregorianCalendar();
-        calendar.clear();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month - 1);
-        calendar.set(Calendar.DAY_OF_MONTH, date);
-
-        System.out.println(calendar.getTime());
-
-        return calendar.getTime();
     }
 
     @Test
@@ -61,7 +48,7 @@ public class CourseSessionTest {
 
     @Test
     public void testCourseDates() {
-        Date sixteenWeeksOut = createDate(2003, 4, 25);
+        Date sixteenWeeksOut = new DateUtil().createDate(2003, 4, 25);
         assertEquals(sixteenWeeksOut, session.getEndDate());
     }
 

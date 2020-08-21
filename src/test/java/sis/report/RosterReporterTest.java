@@ -1,12 +1,10 @@
-package AgileLesson3;
+package sis.report;
 
-import AgileLesson1.Student;
-import AgileLesson2.CourseSession;
+import sis.studentinfo.Student;
+import sis.report.RosterReporter;
+import sis.studentinfo.CourseSession;
 import org.junit.jupiter.api.Test;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import sis.studentinfo.DateUtil;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,8 +26,8 @@ public class RosterReporterTest {
     @Test
     public void testRosterReport() {
 
-        CourseSession session = new CourseSession("ENGL", "101", createDate(2003, 1, 6));
 
+        CourseSession session = new CourseSession("ENGL", "101", new DateUtil().createDate(2003, 1, 6));
         Student studentA = new Student("A");
         Student studentB = new Student("B");
 
@@ -37,21 +35,8 @@ public class RosterReporterTest {
         session.enroll(studentB);
         String rosterReport = new RosterReporter(session).getReport();
 
+        System.out.println(rosterReport);
         assertEquals(RosterReporter.ROSTER_REPORT_HEADER + "A" + RosterReporter.NEWLINE + "B" + RosterReporter.NEWLINE +
                 RosterReporter.ROSTER_REPORT_FOOTER + "2" + RosterReporter.NEWLINE, rosterReport);
-
-    }
-
-    private Date createDate(int year, int month, int date) {
-
-        GregorianCalendar calendar = new GregorianCalendar();
-        calendar.clear();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month - 1);
-        calendar.set(Calendar.DAY_OF_MONTH, date);
-
-        System.out.println(calendar.getTime());
-
-        return calendar.getTime();
     }
 }

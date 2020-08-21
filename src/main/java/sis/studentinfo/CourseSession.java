@@ -1,6 +1,4 @@
-package AgileLesson2;
-
-import AgileLesson1.Student;
+package sis.studentinfo;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,15 +41,15 @@ public class CourseSession {
         this.startDate = startDate;
     }
 
-    public String getDepartment() {
+    String getDepartment() {
         return department;
     }
 
-    public String getNumber() {
+    String getNumber() {
         return number;
     }
 
-    public int getNumberOfStudents() {
+    int getNumberOfStudents() {
         return students.size();
     }
 
@@ -59,14 +57,14 @@ public class CourseSession {
         students.add(student);
     }
 
-    public Student get(int index) {
+    Student get(int index) {
         return students.get(index);
     }
 
     /**
      * @return Date the last date of the course session
      */
-    public Date getEndDate() {
+    Date getEndDate() {
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(startDate);
         int numberOfDays = 16 * 7 - 3;
@@ -74,7 +72,7 @@ public class CourseSession {
         return calendar.getTime();
     }
 
-    public Date getStartDate() {
+    Date getStartDate() {
         return startDate;
     }
 

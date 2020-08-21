@@ -1,4 +1,4 @@
-package AgileLesson1;
+package sis.studentinfo;
 
 public class Student {
     private String name;

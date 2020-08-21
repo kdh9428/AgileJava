@@ -1,6 +1,7 @@
-package AgileLesson1;
+package sis.studentinfo;
 
 import org.junit.jupiter.api.Test;
+import sis.studentinfo.Student;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
