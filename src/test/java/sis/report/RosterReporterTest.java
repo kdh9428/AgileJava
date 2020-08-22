@@ -27,7 +27,7 @@ public class RosterReporterTest {
     public void testRosterReport() {
 
 
-        CourseSession session = new CourseSession("ENGL", "101", new DateUtil().createDate(2003, 1, 6));
+        CourseSession session = CourseSession.create("ENGL", "101", DateUtil.createDate(2003, 1, 6));
         Student studentA = new Student("A");
         Student studentB = new Student("B");
 

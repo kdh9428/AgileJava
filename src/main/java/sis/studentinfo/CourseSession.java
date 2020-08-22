@@ -14,11 +14,12 @@ import java.util.GregorianCalendar;
  */
 public class CourseSession {
 
+
+    private static int count;
+
     private String department;
     private String number;
-
     private ArrayList<Student> students = new ArrayList<Student>();
-
     private Date startDate;
 
     /**
@@ -35,10 +36,28 @@ public class CourseSession {
         this.number = number;
     }
 
-    public CourseSession(String department, String number, Date startDate) {
+    private CourseSession(String department, String number, Date startDate) {
         this.department = department;
         this.number = number;
         this.startDate = startDate;
+    }
+
+    private static void incrementCount() {
+        ++count;
+    }
+
+
+    static int getCount() {
+        return count;
+    }
+
+    static void resetCount(){
+        count = 0;
+    }
+
+    public static CourseSession create(String department, String number, Date startDate) {
+        CourseSession.incrementCount();
+        return new CourseSession(department, number, startDate);
     }
 
     String getDepartment() {

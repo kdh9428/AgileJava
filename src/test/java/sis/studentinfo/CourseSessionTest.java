@@ -9,6 +9,7 @@ import sis.studentinfo.CourseSession;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static sis.studentinfo.DateUtil.createDate;
 
 public class CourseSessionTest {
 
@@ -17,8 +18,8 @@ public class CourseSessionTest {
 
     @BeforeEach
     public void setUp() {
-        startDate = new DateUtil().createDate(2003, 1, 6);
-        session = new CourseSession("ENGL", "101", startDate);
+        startDate = createDate(2003, 1, 6);
+        session = CourseSession.create("ENGL", "101", startDate);
     }
 
     @Test
@@ -27,6 +28,16 @@ public class CourseSessionTest {
         assertEquals("101", session.getNumber());
         assertEquals(0, session.getNumberOfStudents());
         assertEquals(startDate, session.getStartDate());
+
+        CourseSession.resetCount();
+//        createCourseSession();
+        assertEquals(1, CourseSession.getCount());
+        createCourseSession();
+        assertEquals(2, CourseSession.getCount());
+    }
+
+    private CourseSession createCourseSession() {
+        return CourseSession.create("ENEL","101",startDate);
     }
 
     @Test
@@ -48,7 +59,7 @@ public class CourseSessionTest {
 
     @Test
     public void testCourseDates() {
-        Date sixteenWeeksOut = new DateUtil().createDate(2003, 4, 25);
+        Date sixteenWeeksOut = createDate(2003, 4, 25);
         assertEquals(sixteenWeeksOut, session.getEndDate());
     }
 
