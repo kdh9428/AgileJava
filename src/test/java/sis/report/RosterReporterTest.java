@@ -5,6 +5,7 @@ import sis.report.RosterReporter;
 import sis.studentinfo.CourseSession;
 import org.junit.jupiter.api.Test;
 import sis.studentinfo.DateUtil;
+import sis.util.StringUtil;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,7 +37,7 @@ public class RosterReporterTest {
         String rosterReport = new RosterReporter(session).getReport();
 
         System.out.println(rosterReport);
-        assertEquals(RosterReporter.ROSTER_REPORT_HEADER + "A" + RosterReporter.NEWLINE + "B" + RosterReporter.NEWLINE +
-                RosterReporter.ROSTER_REPORT_FOOTER + "2" + RosterReporter.NEWLINE, rosterReport);
+        assertEquals(RosterReporter.ROSTER_REPORT_HEADER + "A" + StringUtil.NEWLINE + "B" + StringUtil.NEWLINE +
+                RosterReporter.ROSTER_REPORT_FOOTER + "2" + StringUtil.NEWLINE, rosterReport);
     }
 }

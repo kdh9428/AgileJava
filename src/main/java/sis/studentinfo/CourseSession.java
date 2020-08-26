@@ -19,8 +19,9 @@ public class CourseSession {
 
     private String department;
     private String number;
-    private ArrayList<Student> students = new ArrayList<Student>();
+    private ArrayList<Student> students = new ArrayList<>();
     private Date startDate;
+    private int numberOfCredits;
 
     /**
      * Constructs a CourseSession starting on a specific date
@@ -73,6 +74,7 @@ public class CourseSession {
     }
 
     public void enroll(Student student) {
+        student.addCredits(numberOfCredits);
         students.add(student);
     }
 
@@ -97,5 +99,9 @@ public class CourseSession {
 
     public ArrayList<Student> getAllStudents(){
         return students;
+    }
+
+    public void setNumberOfCredits(int numberOfCredits) {
+        this.numberOfCredits = numberOfCredits;
     }
 }

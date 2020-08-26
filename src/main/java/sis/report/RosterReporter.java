@@ -2,12 +2,13 @@ package sis.report;
 
 import sis.studentinfo.Student;
 import sis.studentinfo.CourseSession;
+import sis.util.StringUtil;
 
 public class RosterReporter {
 
-    public static final String NEWLINE = System.getProperty("line.separator");
-    public static final String ROSTER_REPORT_HEADER = "Student" + NEWLINE + "-" + NEWLINE;
-    public static final String ROSTER_REPORT_FOOTER = NEWLINE + "# students =";
+//    public static final String NEWLINE = System.getProperty("line.separator");
+    public static final String ROSTER_REPORT_HEADER = "Student" + StringUtil.NEWLINE + "-" + StringUtil.NEWLINE;
+    public static final String ROSTER_REPORT_FOOTER = StringUtil.NEWLINE + "# students =";
 
     private CourseSession session;
 
@@ -52,11 +53,11 @@ public class RosterReporter {
     void writeBody(StringBuilder buffer) {
         for (Student student : session.getAllStudents()) {
             buffer.append(student.getName());
-            buffer.append(NEWLINE);
+            buffer.append(StringUtil.NEWLINE);
         }
     }
 
     void writeFooter(StringBuilder buffer) {
-        buffer.append(ROSTER_REPORT_FOOTER + session.getAllStudents().size() + NEWLINE);
+        buffer.append(ROSTER_REPORT_FOOTER + session.getAllStudents().size() + StringUtil.NEWLINE);
     }
 }
