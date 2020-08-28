@@ -4,7 +4,6 @@ import pieces.Piece;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class Board {
 
@@ -50,29 +49,28 @@ public class Board {
 //            }
 //        }
 
-        initPieceLine(0, Piece.WHITE);
+        initPieceLine(0, Piece.Color.WHITE);
 
         for (int i = 0; i < BOARD_ROW; i++)
-            pieces.add(i + BOARD_ROW, Piece.createPiece(Piece.WHITE, Piece.PAWN));
-
+            pieces.add(i + BOARD_ROW, Piece.createPiece(Piece.Color.WHITE, Piece.TypesOfChessPiece.PAWN));
 
         for (int i = 0; i < BOARD_ROW; i++)
-            pieces.add(i + (BOARD_ROW * 2), Piece.createPiece(Piece.BLACK, Piece.PAWN));
+            pieces.add(i + (BOARD_ROW * 2), Piece.createPiece(Piece.Color.BLACK, Piece.TypesOfChessPiece.PAWN));
 
-        initPieceLine(0, Piece.BLACK);
+        initPieceLine(0, Piece.Color.BLACK);
 
     }
 
-    private void initPieceLine(int line, String color) {
+    private void initPieceLine(int line, Piece.Color color) {
 
-        pieces.add(Piece.createPiece(color, Piece.ROOK));
-        pieces.add(Piece.createPiece(color, Piece.KNIGHT));
-        pieces.add(Piece.createPiece(color, Piece.BISHOP));
-        pieces.add(Piece.createPiece(color, Piece.QUEEN));
-        pieces.add(Piece.createPiece(color, Piece.KING));
-        pieces.add(Piece.createPiece(color, Piece.BISHOP));
-        pieces.add(Piece.createPiece(color, Piece.KNIGHT));
-        pieces.add(Piece.createPiece(color, Piece.ROOK));
+        pieces.add(Piece.createPiece(color, Piece.TypesOfChessPiece.ROOK));
+        pieces.add(Piece.createPiece(color, Piece.TypesOfChessPiece.KNIGHT));
+        pieces.add(Piece.createPiece(color, Piece.TypesOfChessPiece.BISHOP));
+        pieces.add(Piece.createPiece(color, Piece.TypesOfChessPiece.QUEEN));
+        pieces.add(Piece.createPiece(color, Piece.TypesOfChessPiece.KING));
+        pieces.add(Piece.createPiece(color, Piece.TypesOfChessPiece.BISHOP));
+        pieces.add(Piece.createPiece(color, Piece.TypesOfChessPiece.KNIGHT));
+        pieces.add(Piece.createPiece(color, Piece.TypesOfChessPiece.ROOK));
 
     }
 
@@ -84,8 +82,60 @@ public class Board {
 
         StringBuilder builder = new StringBuilder();
 
-        pieces.stream().forEach(a -> builder.append(a.getInitials()));
+//        for(int i = 0; i < BOARD_ROW ; i++){
+//            for (int j = i * BOARD_ROW ; j < 15; j++){
+//                builder.append(pieces.get(j).getInitials());
+//            }
+//                builder.append(DrawBoard.NEWLINE);
+//        }
+//
+//        for (int i = 0; i < 4; i++)
+//        builder.append("........");
+//
+//        for(int i = 15; i < 31 ; i++){
+//            for (int j = i * BOARD_ROW ; j < 15; j++){
+//                builder.append(pieces.get(j).getInitials());
+//            }
+//            builder.append(DrawBoard.NEWLINE);
+//        }
 
+        for (Piece piece : pieces) {
+            if (pieces.indexOf(piece) % 8 == 0 && pieces.indexOf(piece) != 0) {
+                builder.append(DrawBoard.NEWLINE);
+
+                System.out.println(pieces.indexOf(piece));
+            }
+
+            if (pieces.indexOf(piece) == 16) {
+                builder.append("........");
+                builder.append(DrawBoard.NEWLINE);
+                builder.append("........");
+                builder.append(DrawBoard.NEWLINE);
+                builder.append("........");
+                builder.append(DrawBoard.NEWLINE);
+                builder.append("........");
+                builder.append(DrawBoard.NEWLINE);
+            }
+            builder.append(piece.getRepresentation());
+        }
+        builder.append(DrawBoard.NEWLINE);
         return builder.toString();
+    }
+
+
+    public int getNumberOfPieces(String color, char representation) {
+
+        int countPiece = 0;
+
+        for (Piece piece : pieces) {
+            if (piece.getRepresentation() == representation)
+                countPiece++;
+        }
+
+        int count = (int) pieces.stream().filter(a -> a.getRepresentation() == representation).filter(a -> a.getColor().equals(color)).count();
+
+        System.out.println(count);
+
+        return countPiece;
     }
 }

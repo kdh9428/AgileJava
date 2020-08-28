@@ -20,7 +20,7 @@ public class DrawBoard {
                 if (pieces.get(i * Board.BOARD_ROW + j) == null) {
                     draw.append("-");
                 } else {
-                    draw.append(pieces.get(i * Board.BOARD_ROW + j).getInitials());
+                    draw.append(pieces.get(i * Board.BOARD_ROW + j).getRepresentation());
                 }
             }
             draw.append(NEWLINE);

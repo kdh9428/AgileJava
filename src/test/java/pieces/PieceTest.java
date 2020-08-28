@@ -14,16 +14,16 @@ public class PieceTest {
         final String WHITE = "white";
         final String BLACK = "black";
 
-        Piece piece = Piece.createPiece(WHITE, Piece.PAWN);
-        assertEquals(WHITE, piece.getColor());
+        Piece whitePiece = Piece.createPiece(Piece.Color.WHITE, Piece.TypesOfChessPiece.PAWN);
+        assertEquals(WHITE, whitePiece.getColor());
 
-        Piece piece1 = Piece.createPiece(BLACK, Piece.PAWN);
-        assertEquals(BLACK, piece1.getColor());
+        Piece blackPiece = Piece.createPiece(Piece.Color.BLACK, Piece.TypesOfChessPiece.PAWN);
+        assertEquals(BLACK, blackPiece.getColor());
 
         Board board = new Board();
         board.initialize();
 
-        assertEquals(16, board.getNumberOfPawns());
+        assertEquals(32, board.getNumberOfPawns());
 
 
         StringBuilder whiteLocation = new StringBuilder();
@@ -31,8 +31,8 @@ public class PieceTest {
 
 
         for (int i = 0; i < Board.BOARD_ROW; i++) {
-            blackLocation.append(board.getPieces(i + Board.BOARD_ROW).getInitials());
-            whiteLocation.append(board.getPieces(i + (Board.BOARD_ROW * 6)).getInitials());
+            blackLocation.append(board.getPieces(i + Board.BOARD_ROW).getRepresentation());
+            whiteLocation.append(board.getPieces(i + (Board.BOARD_ROW * 2)).getRepresentation());
         }
 
         assertEquals(whiteLocation.toString(), "pppppppp");
@@ -40,53 +40,88 @@ public class PieceTest {
     }
 
     @Test
+    public void testCrestePiece() {
+        verifyCreation(Piece.createWhite(Piece.TypesOfChessPiece.PAWN), Piece.createBlack(Piece.TypesOfChessPiece.PAWN), Piece.TypesOfChessPiece.PAWN, Piece.TypesOfChessPiece.PAWN.initials);
+        verifyCreation(Piece.createWhite(Piece.TypesOfChessPiece.ROOK), Piece.createBlack(Piece.TypesOfChessPiece.ROOK), Piece.TypesOfChessPiece.ROOK, Piece.TypesOfChessPiece.ROOK.initials);
+        verifyCreation(Piece.createWhite(Piece.TypesOfChessPiece.KNIGHT), Piece.createBlack(Piece.TypesOfChessPiece.KNIGHT), Piece.TypesOfChessPiece.KNIGHT, Piece.TypesOfChessPiece.KNIGHT.initials);
+        verifyCreation(Piece.createWhite(Piece.TypesOfChessPiece.BISHOP), Piece.createBlack(Piece.TypesOfChessPiece.BISHOP), Piece.TypesOfChessPiece.BISHOP, Piece.TypesOfChessPiece.BISHOP.initials);
+        verifyCreation(Piece.createWhite(Piece.TypesOfChessPiece.QUEEN), Piece.createBlack(Piece.TypesOfChessPiece.QUEEN), Piece.TypesOfChessPiece.QUEEN, Piece.TypesOfChessPiece.QUEEN.initials);
+        verifyCreation(Piece.createWhite(Piece.TypesOfChessPiece.KING), Piece.createBlack(Piece.TypesOfChessPiece.KING), Piece.TypesOfChessPiece.KING, Piece.TypesOfChessPiece.KING.initials);
+
+        Piece blank = Piece.noPiece();
+
+        assertEquals('.', blank.getRepresentation());
+        assertEquals(Piece.TypesOfChessPiece.NO_PIECE, blank.getType());
+    }
+
+    private void verifyCreation(Piece whitePiece, Piece blackPiece, Piece.TypesOfChessPiece type, char representation) {
+
+        assertTrue(whitePiece.isWhite());
+        assertEquals(type, whitePiece.getType());
+        assertEquals(Character.toUpperCase(representation), whitePiece.getRepresentation());
+
+        assertTrue(blackPiece.isBlack());
+        assertEquals(type, blackPiece.getType());
+        assertEquals(representation, blackPiece.getRepresentation());
+
+    }
+
+    @Test
     public void 전역_상수() {
 
-        Piece piece = Piece.createPiece("white", Piece.PAWN);
-        String defaultColor = Piece.WHITE;
+        Piece piece = Piece.createPiece(Piece.Color.WHITE, Piece.TypesOfChessPiece.PAWN);
+        String defaultColor = Piece.Color.WHITE.stringColor;
         assertEquals(defaultColor, piece.getColor());
     }
 
     @Test
     public void BlackAndWhitePawn() {
 
-        Piece blackPiece = Piece.createPiece(Piece.BLACK, Piece.PAWN);
+        Piece blackPiece = Piece.createPiece(Piece.Color.BLACK, Piece.TypesOfChessPiece.PAWN);
         assertEquals("black", blackPiece.getColor());
-        assertEquals('P', blackPiece.getInitials());
+        assertEquals('p', blackPiece.getRepresentation());
 
-        Piece whitePiece = Piece.createPiece(Piece.WHITE, Piece.PAWN);
+        Piece whitePiece = Piece.createPiece(Piece.Color.WHITE, Piece.TypesOfChessPiece.PAWN);
         assertEquals("white", whitePiece.getColor());
-        assertEquals('p', whitePiece.getInitials());
+        assertEquals('P', whitePiece.getRepresentation());
 
     }
 
     @Test
     public void 체스_말_생성_테스트() {
-        Piece whitePiece = Piece.createPiece(Piece.WHITE, Piece.PAWN);
-        assertEquals('P', whitePiece.getInitials());
+        Piece whitePiece = Piece.createPiece(Piece.Color.WHITE, Piece.TypesOfChessPiece.KING);
+        assertEquals('K', whitePiece.getRepresentation());
 
-        Piece blackPiece = Piece.createPiece(Piece.BLACK, Piece.PAWN);
-        assertEquals('p', blackPiece.getInitials());
+        Piece blackPiece = Piece.createPiece(Piece.Color.BLACK, Piece.TypesOfChessPiece.KNIGHT);
+        assertEquals('n', blackPiece.getRepresentation());
     }
 
     @Test
-    public void testColor(){
-        Piece whiteBishop = Piece.createPiece(Piece.WHITE, Piece.BISHOP);
+    public void testColor() {
+        Piece whiteBishop = Piece.createPiece(Piece.Color.WHITE, Piece.TypesOfChessPiece.BISHOP);
         assertTrue(whiteBishop.isWhite(), "흰색이 나와야 합니다.");
 
-        Piece blackKing = Piece.createPiece(Piece.BLACK, Piece.KING);
+        Piece blackKing = Piece.createPiece(Piece.Color.BLACK, Piece.TypesOfChessPiece.KING);
         assertTrue(blackKing.isBlack(), "검정색이 나와야 합니다.");
     }
 
     @Test
-    public void testPieceCount(){
+    public void testPieceCount() {
 
         Board board = new Board();
 
         board.initialize();
 
-        assertEquals(16,Piece.getWhitePieceCount());
-        assertEquals(16,Piece.getBlackPieceCount());
+        assertEquals(16, Piece.getWhitePieceCount());
+        assertEquals(16, Piece.getBlackPieceCount());
 
+    }
+
+    @Test
+    public void testP() {
+        Piece piece = Piece.createPiece(Piece.Color.WHITE, Piece.TypesOfChessPiece.KNIGHT);
+
+        System.out.println(Piece.Color.BLACK);
+        System.out.println(Piece.Color.WHITE);
     }
 }

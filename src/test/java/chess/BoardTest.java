@@ -5,9 +5,6 @@ import org.junit.jupiter.api.Test;
 import pieces.Piece;
 import sis.util.StringUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardTest {
@@ -27,13 +24,13 @@ public class BoardTest {
     @Test
     public void 장기말_추가() {
 //        board.initialize();
-        Piece piece = Piece.createPiece(Piece.BLACK, Piece.PAWN);
+        Piece piece = Piece.createPiece(Piece.Color.BLACK, Piece.TypesOfChessPiece.PAWN);
         board.addPieces(piece);
 
         assertEquals(1, board.getNumberOfPawns());
         assertEquals(piece, board.getPieces(0));
 
-        Piece whitePiece = Piece.createPiece(Piece.WHITE, Piece.PAWN);
+        Piece whitePiece = Piece.createPiece(Piece.Color.WHITE, Piece.TypesOfChessPiece.PAWN);
         board.addPieces(whitePiece);
         assertEquals(2, board.getNumberOfPawns());
         assertEquals(whitePiece, board.getPieces(1));
@@ -48,56 +45,56 @@ public class BoardTest {
     @Test
     public void 흰색_체스말_생성() {
 
-        Piece pawnPiece = Piece.createPiece(Piece.WHITE, Piece.PAWN);
+        Piece pawnPiece = Piece.createPiece(Piece.Color.WHITE, Piece.TypesOfChessPiece.PAWN);
         assertEquals("white", pawnPiece.getColor());
-        assertEquals('P', pawnPiece.getInitials());
+        assertEquals('P', pawnPiece.getRepresentation());
 
-        Piece knightPiece = Piece.createPiece(Piece.WHITE, Piece.KNIGHT);
+        Piece knightPiece = Piece.createPiece(Piece.Color.WHITE, Piece.TypesOfChessPiece.KNIGHT);
         assertEquals("white", knightPiece.getColor());
-        assertEquals('N', knightPiece.getInitials());
+        assertEquals('N', knightPiece.getRepresentation());
 
-        Piece rookPiece = Piece.createPiece(Piece.WHITE, Piece.ROOK);
+        Piece rookPiece = Piece.createPiece(Piece.Color.WHITE, Piece.TypesOfChessPiece.ROOK);
         assertEquals("white", rookPiece.getColor());
-        assertEquals('R', rookPiece.getInitials());
+        assertEquals('R', rookPiece.getRepresentation());
 
-        Piece bishopPiece = Piece.createPiece(Piece.WHITE, Piece.BISHOP);
+        Piece bishopPiece = Piece.createPiece(Piece.Color.WHITE, Piece.TypesOfChessPiece.BISHOP);
         assertEquals("white", bishopPiece.getColor());
-        assertEquals('B', bishopPiece.getInitials());
+        assertEquals('B', bishopPiece.getRepresentation());
 
-        Piece queenPiece = Piece.createPiece(Piece.WHITE, Piece.QUEEN);
+        Piece queenPiece = Piece.createPiece(Piece.Color.WHITE, Piece.TypesOfChessPiece.QUEEN);
         assertEquals("white", queenPiece.getColor());
-        assertEquals('Q', queenPiece.getInitials());
+        assertEquals('Q', queenPiece.getRepresentation());
 
-        Piece kingPiece = Piece.createPiece(Piece.WHITE, Piece.KING);
+        Piece kingPiece = Piece.createPiece(Piece.Color.WHITE, Piece.TypesOfChessPiece.KING);
         assertEquals("white", kingPiece.getColor());
-        assertEquals('K', kingPiece.getInitials());
+        assertEquals('K', kingPiece.getRepresentation());
     }
 
     @Test
     public void 검은색_체스말_생성(){
-        Piece pawnPiece = Piece.createPiece(Piece.BLACK, Piece.PAWN);
+        Piece pawnPiece = Piece.createPiece(Piece.Color.BLACK, Piece.TypesOfChessPiece.PAWN);
         assertEquals("black", pawnPiece.getColor());
-        assertEquals('p', pawnPiece.getInitials());
+        assertEquals('p', pawnPiece.getRepresentation());
 
-        Piece knightPiece = Piece.createPiece(Piece.BLACK, Piece.KNIGHT);
+        Piece knightPiece = Piece.createPiece(Piece.Color.BLACK, Piece.TypesOfChessPiece.KNIGHT);
         assertEquals("black", knightPiece.getColor());
-        assertEquals('n', knightPiece.getInitials());
+        assertEquals('n', knightPiece.getRepresentation());
 
-        Piece rookPiece = Piece.createPiece(Piece.BLACK, Piece.ROOK);
+        Piece rookPiece = Piece.createPiece(Piece.Color.BLACK, Piece.TypesOfChessPiece.ROOK);
         assertEquals("black", rookPiece.getColor());
-        assertEquals('r', rookPiece.getInitials());
+        assertEquals('r', rookPiece.getRepresentation());
 
-        Piece bishopPiece = Piece.createPiece(Piece.BLACK, Piece.BISHOP);
+        Piece bishopPiece = Piece.createPiece(Piece.Color.BLACK, Piece.TypesOfChessPiece.BISHOP);
         assertEquals("black", bishopPiece.getColor());
-        assertEquals('b', bishopPiece.getInitials());
+        assertEquals('b', bishopPiece.getRepresentation());
 
-        Piece queenPiece = Piece.createPiece(Piece.BLACK, Piece.QUEEN);
+        Piece queenPiece = Piece.createPiece(Piece.Color.BLACK, Piece.TypesOfChessPiece.QUEEN);
         assertEquals("black", queenPiece.getColor());
-        assertEquals('q', queenPiece.getInitials());
+        assertEquals('q', queenPiece.getRepresentation());
 
-        Piece kingPiece = Piece.createPiece(Piece.BLACK, Piece.KING);
+        Piece kingPiece = Piece.createPiece(Piece.Color.BLACK, Piece.TypesOfChessPiece.KING);
         assertEquals("black", kingPiece.getColor());
-        assertEquals('k', kingPiece.getInitials());
+        assertEquals('k', kingPiece.getRepresentation());
     }
 
     @Test
@@ -108,19 +105,20 @@ public class BoardTest {
 
         String blankRank = StringUtil.appendNewLine("........");
 
-        assertEquals(
-                StringUtil.appendNewLine("RNBQKBNR") +
-                        StringUtil.appendNewLine("PPPPPPPP") +
+        assertEquals(StringUtil.appendNewLine("rnbqkbnr") +
+                        StringUtil.appendNewLine("pppppppp") +
                         blankRank + blankRank + blankRank + blankRank +
-                        StringUtil.appendNewLine("ppppppp") +
-                        StringUtil.appendNewLine("rnbqkbnr"),
+                        StringUtil.appendNewLine("PPPPPPPP") +
+                        StringUtil.appendNewLine("RNBQKBNR"),
                 board.print());
     }
 
+
     @Test
-    public void testPrint(){
-        Board board = new Board();
+    public void 말_종류_개수_반환(){
         board.initialize();
-        board.print();
+        board.getNumberOfPieces("white", 'p');
+        board.getNumberOfPieces("white", 'n');
+
     }
 }
