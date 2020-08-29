@@ -52,10 +52,13 @@ public class Board {
         initPieceLine(0, Piece.Color.WHITE);
 
         for (int i = 0; i < BOARD_ROW; i++)
-            pieces.add(i + BOARD_ROW, Piece.createPiece(Piece.Color.WHITE, Piece.TypesOfChessPiece.PAWN));
+            pieces.add(Piece.createPiece(Piece.Color.WHITE, Piece.TypesOfChessPiece.PAWN));
+
+        for (int i = 0; i < BOARD_ROW * 4; i++)
+            pieces.add(Piece.createPiece(Piece.Color.NONE, Piece.TypesOfChessPiece.NO_PIECE));
 
         for (int i = 0; i < BOARD_ROW; i++)
-            pieces.add(i + (BOARD_ROW * 2), Piece.createPiece(Piece.Color.BLACK, Piece.TypesOfChessPiece.PAWN));
+            pieces.add(Piece.createPiece(Piece.Color.BLACK, Piece.TypesOfChessPiece.PAWN));
 
         initPieceLine(0, Piece.Color.BLACK);
 
@@ -82,23 +85,6 @@ public class Board {
 
         StringBuilder builder = new StringBuilder();
 
-//        for(int i = 0; i < BOARD_ROW ; i++){
-//            for (int j = i * BOARD_ROW ; j < 15; j++){
-//                builder.append(pieces.get(j).getInitials());
-//            }
-//                builder.append(DrawBoard.NEWLINE);
-//        }
-//
-//        for (int i = 0; i < 4; i++)
-//        builder.append("........");
-//
-//        for(int i = 15; i < 31 ; i++){
-//            for (int j = i * BOARD_ROW ; j < 15; j++){
-//                builder.append(pieces.get(j).getInitials());
-//            }
-//            builder.append(DrawBoard.NEWLINE);
-//        }
-
         for (Piece piece : pieces) {
             if (pieces.indexOf(piece) % 8 == 0 && pieces.indexOf(piece) != 0) {
                 builder.append(DrawBoard.NEWLINE);
@@ -106,16 +92,6 @@ public class Board {
                 System.out.println(pieces.indexOf(piece));
             }
 
-            if (pieces.indexOf(piece) == 16) {
-                builder.append("........");
-                builder.append(DrawBoard.NEWLINE);
-                builder.append("........");
-                builder.append(DrawBoard.NEWLINE);
-                builder.append("........");
-                builder.append(DrawBoard.NEWLINE);
-                builder.append("........");
-                builder.append(DrawBoard.NEWLINE);
-            }
             builder.append(piece.getRepresentation());
         }
         builder.append(DrawBoard.NEWLINE);
@@ -126,16 +102,39 @@ public class Board {
     public int getNumberOfPieces(String color, char representation) {
 
         int countPiece = 0;
-
-        for (Piece piece : pieces) {
-            if (piece.getRepresentation() == representation)
-                countPiece++;
-        }
-
-        int count = (int) pieces.stream().filter(a -> a.getRepresentation() == representation).filter(a -> a.getColor().equals(color)).count();
-
-        System.out.println(count);
+        countPiece = (int) pieces.stream().filter(a -> a.getRepresentation() == representation).filter(a -> a.getColor().equals(color)).count();
 
         return countPiece;
+    }
+
+    public Piece getPositionOfChessPiece(char row, int column) {
+
+        int rowNumber = Character.getNumericValue(row) - 10;
+
+        int ch = rowNumber + (column - 1) * 8;
+        System.out.println("row : " + row + ", column : " + column + ", get number : " + ch);
+        Piece piece = pieces.get(rowNumber + (column - 1) * 8);
+
+        return piece;
+    }
+
+    public void createEmptyBoard() {
+        pieces.clear();
+
+        for (int i = 0; i < BOARD_ROW * BOARD_COL; i++) {
+            pieces.add(Piece.noPiece());
+        }
+    }
+
+    public void addPieceToCollection(Piece piece, char row, int column) {
+        int rowNumber = Character.getNumericValue(row) - 10;
+        pieces.set(rowNumber + (column - 1) * 8, piece);
+    }
+
+    public int allScoreOfPiece(Piece.Color color) {
+
+        pieces.stream().filter(a -> a.getColor().equals(color.stringColor)).filter(b -> b.getType().equals(Piece.TypesOfChessPiece.valueOf("a")));
+
+        return 0;
     }
 }

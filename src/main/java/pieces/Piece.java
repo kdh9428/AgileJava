@@ -6,7 +6,7 @@ public class Piece {
     public enum Color {
         WHITE("white"), BLACK("black"), NONE("none");
 
-        String stringColor;
+        public String stringColor;
 
         Color(String stringColor) {
             this.stringColor = stringColor;
@@ -115,5 +115,4 @@ public class Piece {
     public void setType(TypesOfChessPiece type) {
         this.type = type;
     }
-
 }
