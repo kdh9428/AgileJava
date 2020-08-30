@@ -131,10 +131,38 @@ public class Board {
         pieces.set(rowNumber + (column - 1) * 8, piece);
     }
 
-    public int allScoreOfPiece(Piece.Color color) {
+    public double allScoreOfPiece(Piece.Color color) {
 
-        pieces.stream().filter(a -> a.getColor().equals(color.stringColor)).filter(b -> b.getType().equals(Piece.TypesOfChessPiece.valueOf("a")));
 
-        return 0;
+        double pieceValue = 0;
+
+        for (Piece piece : pieces) {
+
+            int pieceIndex = pieces.indexOf(piece);
+
+            if (piece.getType() == Piece.TypesOfChessPiece.PAWN) {
+                pawnIndexCheck(pieceIndex, color);
+            }
+
+            if (piece.getColor() == color.stringColor) {
+                System.out.print(piece.getPieceValue() + ", ");
+                pieceValue += piece.getPieceValue();
+            }
+        }
+        return pieceValue;
+    }
+
+    private void pawnIndexCheck(int pieceIndex, Piece.Color color) {
+
+        Piece pawnPiece = pieces.get(pieceIndex);
+
+        if (pieceIndex <= 55) {
+            if (pawnPiece.getType() == pieces.get(pieceIndex + 8).getType() && color.stringColor == pawnPiece.getColor()) {
+
+                pieces.get(pieceIndex).setPieceValue(0.5);
+                pieces.get(pieceIndex + 8).setPieceValue(0.5);
+
+            }
+        }
     }
 }

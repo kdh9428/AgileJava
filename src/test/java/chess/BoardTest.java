@@ -71,7 +71,7 @@ public class BoardTest {
     }
 
     @Test
-    public void 검은색_체스말_생성(){
+    public void 검은색_체스말_생성() {
         Piece pawnPiece = Piece.createPiece(Piece.Color.BLACK, Piece.TypesOfChessPiece.PAWN);
         assertEquals("black", pawnPiece.getColor());
         assertEquals('P', pawnPiece.getRepresentation());
@@ -101,7 +101,7 @@ public class BoardTest {
     public void testCreate() {
         board.initialize();
 
-        assertEquals(64,board.pieceCount());
+        assertEquals(64, board.pieceCount());
 
         String blankRank = StringUtil.appendNewLine("........");
 
@@ -114,7 +114,7 @@ public class BoardTest {
     }
 
     @Test
-    public void emptyBoard(){
+    public void emptyBoard() {
 
         Board board = new Board();
         board.createEmptyBoard();
@@ -122,7 +122,7 @@ public class BoardTest {
 
 
     @Test
-    public void 말_종류_개수_반환(){
+    public void 말_종류_개수_반환() {
         board.initialize();
         board.getNumberOfPieces("white", 'p');
         board.getNumberOfPieces("white", 'n');
@@ -130,31 +130,31 @@ public class BoardTest {
     }
 
     @Test
-    public void 말_위치_반환(){
+    public void 말_위치_반환() {
 
         board.initialize();
         Piece pie = board.getPositionOfChessPiece('a', 1);
         Piece pie1 = board.getPositionOfChessPiece('b', 4);
-        System.out.println(pie.getColor() + ", "+ pie.getRepresentation());
-        System.out.println(pie1.getColor() + ", "+ pie1.getRepresentation());
+        System.out.println(pie.getColor() + ", " + pie.getRepresentation());
+        System.out.println(pie1.getColor() + ", " + pie1.getRepresentation());
     }
 
     @Test
-    public void 임의의_위치에_말을_추가(){
+    public void 임의의_위치에_말을_추가() {
         board.createEmptyBoard();
-        board.addPieceToCollection(Piece.createBlack(Piece.TypesOfChessPiece.KING),'b',3);
-        board.addPieceToCollection(Piece.createBlack(Piece.TypesOfChessPiece.ROOK),'b',4);
-        board.addPieceToCollection(Piece.createWhite(Piece.TypesOfChessPiece.KING),'c',5);
+        board.addPieceToCollection(Piece.createBlack(Piece.TypesOfChessPiece.KING), 'b', 3);
+        board.addPieceToCollection(Piece.createBlack(Piece.TypesOfChessPiece.ROOK), 'b', 4);
+        board.addPieceToCollection(Piece.createWhite(Piece.TypesOfChessPiece.KING), 'c', 5);
 
         Piece piece = board.getPositionOfChessPiece('b', 3);
         assertEquals(piece.getColor(), Piece.Color.BLACK.stringColor);
         assertEquals(piece.getType(), Piece.TypesOfChessPiece.KING);
 
-        piece = board.getPositionOfChessPiece('b',4);
+        piece = board.getPositionOfChessPiece('b', 4);
         assertEquals(piece.getColor(), Piece.Color.BLACK.stringColor);
         assertEquals(piece.getType(), Piece.TypesOfChessPiece.ROOK);
 
-        piece = board.getPositionOfChessPiece('c',5);
+        piece = board.getPositionOfChessPiece('c', 5);
         assertEquals(piece.getColor(), Piece.Color.WHITE.stringColor);
         assertEquals(piece.getType(), Piece.TypesOfChessPiece.KING);
 
@@ -167,15 +167,37 @@ public class BoardTest {
                 StringUtil.appendNewLine("..k.....") +
                 blankRank +
                 blankRank +
-                blankRank,board.print());
+                blankRank, board.print());
     }
 
     @Test
-    public void 체스말_총점(){
+    public void 체스말_총점() {
 
-        board.allScoreOfPiece(Piece.Color.WHITE);
+        board.createEmptyBoard();
+        board.addPieceToCollection(Piece.createBlack(Piece.TypesOfChessPiece.KING), 'b', 1);
+        board.addPieceToCollection(Piece.createBlack(Piece.TypesOfChessPiece.ROOK), 'c', 1);
+        board.addPieceToCollection(Piece.createBlack(Piece.TypesOfChessPiece.PAWN), 'a', 2);
+        board.addPieceToCollection(Piece.createBlack(Piece.TypesOfChessPiece.PAWN), 'c', 2);
+        board.addPieceToCollection(Piece.createBlack(Piece.TypesOfChessPiece.BISHOP), 'd', 2);
+        board.addPieceToCollection(Piece.createBlack(Piece.TypesOfChessPiece.PAWN), 'b', 3);
+        board.addPieceToCollection(Piece.createBlack(Piece.TypesOfChessPiece.QUEEN), 'e', 3);
+
+        board.addPieceToCollection(Piece.createWhite(Piece.TypesOfChessPiece.KNIGHT), 'f', 5);
+        board.addPieceToCollection(Piece.createWhite(Piece.TypesOfChessPiece.QUEEN), 'g', 5);
+        board.addPieceToCollection(Piece.createWhite(Piece.TypesOfChessPiece.PAWN), 'f', 6);
+        board.addPieceToCollection(Piece.createWhite(Piece.TypesOfChessPiece.PAWN), 'h', 6);
+        board.addPieceToCollection(Piece.createWhite(Piece.TypesOfChessPiece.PAWN), 'f', 7);
+        board.addPieceToCollection(Piece.createWhite(Piece.TypesOfChessPiece.PAWN), 'g', 7);
+        board.addPieceToCollection(Piece.createWhite(Piece.TypesOfChessPiece.ROOK), 'e', 8);
+        board.addPieceToCollection(Piece.createWhite(Piece.TypesOfChessPiece.KING), 'f', 8);
+
+        double totalBlackPiece = board.allScoreOfPiece(Piece.Color.BLACK);
+        double totalWhitePiece = board.allScoreOfPiece(Piece.Color.WHITE);
+
+
+        System.out.println(board.print());
+
+        System.out.println("검정색 합계 : " + totalBlackPiece + "흰색 말 합계 :" + totalWhitePiece);
 
     }
-
-
 }

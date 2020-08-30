@@ -14,11 +14,17 @@ public class Piece {
     }
 
     public enum TypesOfChessPiece {
-        PAWN('p'), KNIGHT('n'), ROOK('r'), BISHOP('b'), QUEEN('q'), KING('k'), NO_PIECE('.');
+        PAWN('p', 1),
+        KNIGHT('n', 2.5),
+        ROOK('r', 5),
+        BISHOP('b', 3),
+        QUEEN('q', 9),
+        KING('k', 0),
+        NO_PIECE('.', 0);
 
         char initials;
 
-        TypesOfChessPiece(char initials) {
+        TypesOfChessPiece(char initials, double valueScore) {
             this.initials = initials;
         }
     }
@@ -28,6 +34,7 @@ public class Piece {
     private TypesOfChessPiece type;
     private static int whitePieceCount;
     private static int blackPieceCount;
+    private double pieceValue;
 
 
 //    public static final String WHITE = "white";
@@ -45,6 +52,24 @@ public class Piece {
         this.color = color.stringColor;
         this.representation = chessPiece.initials;
         this.type = chessPiece;
+
+        switch (chessPiece){
+
+            case PAWN: pieceValue = 1;
+                break;
+            case KNIGHT: pieceValue = 2.5;
+                break;
+            case ROOK: pieceValue = 5;
+                break;
+            case QUEEN: pieceValue = 9;
+                break;
+            case BISHOP: pieceValue = 3;
+                break;
+            case KING: pieceValue = 0;
+                break;
+            case NO_PIECE: pieceValue = 0;
+                break;
+        }
 
         if (color == Color.WHITE) {
             this.representation = chessPiece.initials;
@@ -75,6 +100,14 @@ public class Piece {
         return new Piece(Color.NONE, TypesOfChessPiece.NO_PIECE);
     }
 
+
+    public double getPieceValue() {
+        return pieceValue;
+    }
+
+    public void setPieceValue(double pieceValue) {
+        this.pieceValue = pieceValue;
+    }
 
     public String getColor() {
         return color;
