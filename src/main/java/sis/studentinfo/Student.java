@@ -4,7 +4,19 @@ import java.util.ArrayList;
 
 public class Student {
 
-    public enum Grade {A, B, C, D, F}
+    public enum Grade {
+        A(4), B(3), C(2), D(1), F(0);
+
+        private int point;
+
+        Grade(int point) {
+            this.point = point;
+        }
+
+        int getPoint(){
+            return point;
+        }
+    }
 
     private String name;
     private int credits;
