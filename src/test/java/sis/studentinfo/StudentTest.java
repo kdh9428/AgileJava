@@ -12,26 +12,27 @@ public class StudentTest {
     public void testCreate() {
         final String firstStudentName = "Jane Doe";
 
-        Student student = new Student(firstStudentName);
-        assertEquals(firstStudentName, student.getName());
+        Student firstStudent = new Student(firstStudentName);
+        assertEquals(firstStudentName, firstStudent.getName());
+        assertEquals("Jane", firstStudent.getFirstName());
+        assertEquals("Doe", firstStudent.getLastName());
+        assertEquals("", firstStudent.getMiddleName());
 
-
-        final String secondStudentName = "Joe Blow";
+        System.out.println("==========================================");
+        final String secondStudentName = "Blow";
         Student secondStudent = new Student(secondStudentName);
         assertEquals(secondStudentName, secondStudent.getName());
+        assertEquals("", secondStudent.getFirstName());
+        assertEquals("Blow", secondStudent.getLastName());
+        assertEquals("", secondStudent.getMiddleName());
 
-        assertEquals(firstStudentName, student.getName());
-
-        student = new Student("a");
-        assertEquals(0, student.getCredits());
-        student.addCredits(3);
-        assertEquals(3, student.getCredits());
-        assertFalse(student.isFullTime());
-
-        student.addCredits(4);
-        assertEquals(7, student.getCredits());
-        assertFalse(student.isFullTime());
-
+        System.out.println("==========================================");
+        final String thirdStudentName = "Raymond Douglas Davies";
+        Student thirdStudent = new Student(thirdStudentName);
+        assertEquals(thirdStudentName, thirdStudent.getName());
+        assertEquals("Raymond", thirdStudent.getFirstName());
+        assertEquals("Davies", thirdStudent.getLastName());
+        assertEquals("Douglas", thirdStudent.getMiddleName());
     }
 
     @Test
@@ -122,4 +123,6 @@ public class StudentTest {
         student.setGradingStrategy(new HonorsGradingStrategy());
         return student;
     }
+
 }
+

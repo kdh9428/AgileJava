@@ -1,6 +1,7 @@
 package sis.studentinfo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Student {
 
@@ -13,7 +14,7 @@ public class Student {
             this.point = point;
         }
 
-        int getPoint(){
+        int getPoint() {
             return point;
         }
     }
@@ -23,13 +24,41 @@ public class Student {
     public static final int CREDITS_REQUIRED_FOR_FULL_TIME = 12;
     public static final String IN_STATE = "CO";
     private String state = "";
+    private String firstName = "";
+    private String middleName = "";
+    private String lastName;
 
     private ArrayList<Grade> grades = new ArrayList<>();
     private GradingStrategy gradingStrategy = new BasicGradingStrategy();
 
-    public Student(String name) {
-        this.name = name;
+    public Student(String fullName) {
+        this.name = fullName;
         credits = 0;
+
+        List<String> nameParts = split(fullName);
+        setName(nameParts);
+
+    }
+
+    private void setName(List<String> nameParts) {
+
+        this.lastName = removeLast(nameParts);
+        System.out.println(this.lastName);
+        String name = removeLast(nameParts);
+        if (nameParts.isEmpty()) {
+            this.firstName = name;
+        } else {
+            this.middleName = name;
+            this.firstName = removeLast(nameParts);
+        }
+    }
+
+    private String removeLast(List<String> list) {
+
+        if (list.isEmpty()) {
+            return "";
+        }
+        return list.remove(list.size() - 1);
     }
 
     public String getName() {
@@ -79,5 +108,67 @@ public class Student {
 
     public void setGradingStrategy(GradingStrategy gradingStrategy) {
         this.gradingStrategy = gradingStrategy;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    private List<String> split(String string) {
+        List<String> results = new ArrayList<>();
+
+        StringBuffer word = new StringBuffer();
+
+        for (int index = 0; index < name.length(); index++) {
+            char ch = string.charAt(index);
+            if (!Character.isWhitespace(ch)) {
+                word.append(ch);
+            } else {
+                if (word.length() > 0) {
+                    results.add(word.toString());
+                    word = new StringBuffer();
+                }
+            }
+        }
+        if (word.length() > 0) {
+            results.add(word.toString());
+        }
+        return results;
+    }
+
+    public static int countChars(String input, char ch) {
+        int count;
+        int i;
+        for (i = 0, count = 0; i < input.length(); i++) {
+            if (input.charAt(i) == ch) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static boolean isPalindrome(String string) {
+
+        if (string.length() == 0) {
+            return true;
+        }
+
+        int limit = string.length() / 2;
+
+
+        for (int forward = 0, backward = string.length() - 1; forward < limit; forward++, backward--) {
+
+            if (string.charAt(forward) != string.charAt(backward))
+                return false;
+        }
+        return true;
     }
 }

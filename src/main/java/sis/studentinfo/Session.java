@@ -2,7 +2,7 @@ package sis.studentinfo;
 
 import java.util.*;
 
-abstract public class Session implements Comparable<Session> {
+abstract public class Session implements Comparable<Session>, Iterable<Student> {
 
 
     private static int count;
@@ -29,7 +29,7 @@ abstract public class Session implements Comparable<Session> {
         return this.getNumber().compareTo(that.getNumber());
     }
 
-    void setNumberOfCredits(int numberOfCredits) {
+    public void setNumberOfCredits(int numberOfCredits) {
         this.numberOfCredits = numberOfCredits;
     }
 
@@ -76,4 +76,34 @@ abstract public class Session implements Comparable<Session> {
         return calendar.getTime();
     }
 
+    double averageGpaForPartTimeStudents() {
+        double total = 0;
+        int count = 0;
+
+        for (Iterator<Student> it = students.iterator(); it.hasNext();){
+            Student student = it.next();
+            if (student.isFullTime()){
+                continue;
+            }
+            count++;
+            total += student.getGpa();
+        }
+
+//        for (Student student : students) {
+//            if (student.isFullTime()) {
+//                continue;
+//            }
+//            count++;
+//            total += student.getGpa();
+//        }
+        if (count == 0) return 0.0;
+        return total / count;
+    }
+
+    @Override
+    public Iterator<Student> iterator() {
+        return students.iterator();
+    }
 }
+
+
