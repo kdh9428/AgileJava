@@ -124,8 +124,10 @@ public class BoardTest {
     @Test
     public void 말_종류_개수_반환() {
         board.initialize();
-        board.getNumberOfPieces("white", 'p');
+        int count = board.getNumberOfPieces("white", 'p');
         board.getNumberOfPieces("white", 'n');
+
+        System.out.println(count);
 
     }
 

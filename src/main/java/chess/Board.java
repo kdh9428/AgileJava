@@ -3,13 +3,16 @@ package chess;
 import pieces.Piece;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 public class Board {
 
     public final static int BOARD_ROW = 8;
     public final static int BOARD_COL = 8;
     private List<Piece> pieces = new ArrayList<>();
+    Map<Piece.TypesOfChessPiece, Double> pieceTypesCount;
 
     public Board() {
 //        for (int i = 0; i < BOARD_ROW; i++) {
@@ -104,6 +107,8 @@ public class Board {
         int countPiece = 0;
         countPiece = (int) pieces.stream().filter(a -> a.getRepresentation() == representation).filter(a -> a.getColor().equals(color)).count();
 
+        //        pieceTypesCount = new EnumMap<Piece.TypesOfChessPiece, Double>(Piece.TypesOfChessPiece.class);
+
         return countPiece;
     }
 
@@ -133,15 +138,37 @@ public class Board {
 
     public double allScoreOfPiece(Piece.Color color) {
 
-
         double pieceValue = 0;
+
+        pieceTypesCount = new EnumMap<Piece.TypesOfChessPiece, Double>(Piece.TypesOfChessPiece.class);
 
         for (Piece piece : pieces) {
 
             int pieceIndex = pieces.indexOf(piece);
 
-            if (piece.getType() == Piece.TypesOfChessPiece.PAWN) {
-                pawnIndexCheck(pieceIndex, color);
+//            if (piece.getType() == Piece.TypesOfChessPiece.PAWN) {
+//                pawnIndexCheck(pieceIndex, color);
+//            }
+            switch (piece.getType()){
+                case PAWN:
+//                    piece.setPieceValue(1);
+                    pawnIndexCheck(pieceIndex, color);
+                    break;
+                case KNIGHT:
+                    piece.setPieceValue(2.5);
+                    break;
+                case ROOK:
+                    piece.setPieceValue(5);
+                    break;
+                case QUEEN:
+                    piece.setPieceValue(9);
+                    break;
+                case BISHOP:
+                    piece.setPieceValue(3);
+                    break;
+                case KING:
+                case NO_PIECE:
+                    piece.setPieceValue(0);
             }
 
             if (piece.getColor() == color.stringColor) {
@@ -154,14 +181,15 @@ public class Board {
 
     private void pawnIndexCheck(int pieceIndex, Piece.Color color) {
 
-        Piece pawnPiece = pieces.get(pieceIndex);
 
         if (pieceIndex <= 55) {
-            if (pawnPiece.getType() == pieces.get(pieceIndex + 8).getType() && color.stringColor == pawnPiece.getColor()) {
+            Piece pawnPiece = pieces.get(pieceIndex);
+            Piece addEightToPiece = pieces.get(pieceIndex + 8);
 
-                pieces.get(pieceIndex).setPieceValue(0.5);
-                pieces.get(pieceIndex + 8).setPieceValue(0.5);
+            if (pawnPiece.getType() == addEightToPiece.getType() && color.stringColor == pawnPiece.getColor()) {
 
+                pawnPiece.setPieceValue(0.5);
+                addEightToPiece.setPieceValue(0.5);
             }
         }
     }

@@ -53,24 +53,6 @@ public class Piece {
         this.representation = chessPiece.initials;
         this.type = chessPiece;
 
-        switch (chessPiece){
-
-            case PAWN: pieceValue = 1;
-                break;
-            case KNIGHT: pieceValue = 2.5;
-                break;
-            case ROOK: pieceValue = 5;
-                break;
-            case QUEEN: pieceValue = 9;
-                break;
-            case BISHOP: pieceValue = 3;
-                break;
-            case KING: pieceValue = 0;
-                break;
-            case NO_PIECE: pieceValue = 0;
-                break;
-        }
-
         if (color == Color.WHITE) {
             this.representation = chessPiece.initials;
         } else {
