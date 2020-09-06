@@ -2,6 +2,10 @@ package sis.studentinfo;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StudentTest {
@@ -124,5 +128,14 @@ public class StudentTest {
         return student;
     }
 
+    public List<String> splitToken(String name) {
+        List<String> results = new ArrayList<>();
+        StringTokenizer tokenizer = new StringTokenizer(name, " ");
+
+        while (tokenizer.hasMoreTokens())
+            results.add(tokenizer.nextToken());
+
+        return results;
+    }
 }
 
