@@ -36,8 +36,12 @@ public class Student {
         credits = 0;
 
         List<String> nameParts = split(fullName);
+        final int maximumNumberOfNameParts = 3;
+        if (nameParts.size() > maximumNumberOfNameParts){
+            String message = "Student name '" + fullName + "' contains more than "+ maximumNumberOfNameParts + " parts";
+            throw new StudentNameFormatException(message);
+        }
         setName(nameParts);
-
     }
 
     private void setName(List<String> nameParts) {
@@ -122,25 +126,15 @@ public class Student {
         return lastName;
     }
 
-    private List<String> split(String string) {
+    private List<String> split(String fullName) {
         List<String> results = new ArrayList<>();
 
-        StringBuffer word = new StringBuffer();
+        for (String name : fullName.split(" ")) {
 
-        for (int index = 0; index < name.length(); index++) {
-            char ch = string.charAt(index);
-            if (!Character.isWhitespace(ch)) {
-                word.append(ch);
-            } else {
-                if (word.length() > 0) {
-                    results.add(word.toString());
-                    word = new StringBuffer();
-                }
-            }
+            System.out.println(name);
+            results.add(name);
         }
-        if (word.length() > 0) {
-            results.add(word.toString());
-        }
+
         return results;
     }
 
@@ -162,7 +156,6 @@ public class Student {
         }
 
         int limit = string.length() / 2;
-
 
         for (int forward = 0, backward = string.length() - 1; forward < limit; forward++, backward--) {
 

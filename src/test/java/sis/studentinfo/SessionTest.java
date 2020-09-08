@@ -3,12 +3,12 @@ package sis.studentinfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static sis.studentinfo.DateUtil.createDate;
 
 abstract public class SessionTest {
@@ -112,11 +112,11 @@ abstract public class SessionTest {
     }
 
     @Test
-    public void testIterate(){
+    public void testIterate() {
         enrollStudents(session);
 
         List<Student> results = new ArrayList<>();
-        for (Student student : session){
+        for (Student student : session) {
             results.add(student);
         }
 
@@ -124,9 +124,42 @@ abstract public class SessionTest {
 
     }
 
-    private void enrollStudents(Session session){
+    private void enrollStudents(Session session) {
         session.enroll(new Student("1"));
         session.enroll(new Student("2"));
         session.enroll(new Student("3"));
+    }
+
+    @Test
+    public void testSessionUrl() throws MalformedURLException {
+        final String url = "http://course.langrsoft.com/cmsc300";
+        session.setUrl(url);
+        System.out.println(session.getUrl().toString());
+        assertEquals(url, session.getUrl().toString());
+    }
+
+    @Test
+    public void testInvalidSessionUrl() {
+        final String url = "http://course.langrsoft.com/cmsc300";
+
+        try {
+            session.setUrl(url);
+            fail("expected exception due to invalid protocol in URL");
+        } catch (MalformedURLException success) {
+//            success.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testBadlyFormattedName() {
+
+        try {
+            new Student("a b c d");
+
+            fail("expected exception from 4-part name");
+        } catch (StudentNameFormatException expectedException) {
+            assertEquals("Student name 'a b c d' contains more than 3 parts", expectedException.getMessage());
+        }
+
     }
 }
