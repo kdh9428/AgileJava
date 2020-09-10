@@ -2,6 +2,7 @@ package sis.studentinfo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Student {
 
@@ -30,6 +31,8 @@ public class Student {
 
     private ArrayList<Grade> grades = new ArrayList<>();
     private GradingStrategy gradingStrategy = new BasicGradingStrategy();
+    static final String TOO_MANY_NAME_PARTS_MSG = "Student name '%s' contains more than %d parts";
+    public static final int MAX_NAME_PARTS = 3;
 
     public Student(String fullName) {
         this.name = fullName;
@@ -37,11 +40,17 @@ public class Student {
 
         List<String> nameParts = split(fullName);
         final int maximumNumberOfNameParts = 3;
-        if (nameParts.size() > maximumNumberOfNameParts){
-            String message = "Student name '" + fullName + "' contains more than "+ maximumNumberOfNameParts + " parts";
+        if (nameParts.size() > maximumNumberOfNameParts) {
+            String message = String.format(Student.TOO_MANY_NAME_PARTS_MSG, fullName, MAX_NAME_PARTS);
+            log(message);
             throw new StudentNameFormatException(message);
         }
         setName(nameParts);
+    }
+
+    private void log(String message) {
+        Logger logger = Logger.getLogger(getClass().getName());
+        logger.info(message);
     }
 
     private void setName(List<String> nameParts) {
@@ -164,4 +173,16 @@ public class Student {
         }
         return true;
     }
+//
+//    public static Student findByLastName(String lastName) throws RuntimeException{
+//        Connection dbConnection = null;
+//        try {
+//            dbConnection = getConnection();
+//            return lookup(dbConnection, lastName);
+//        }catch (SQLException e){
+//            throw new RuntimeException(e.getMessage());
+//        }finally {
+//            close((Closeable) dbConnection);
+//        }
+//}
 }

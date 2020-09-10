@@ -84,9 +84,9 @@ abstract public class Session implements Comparable<Session>, Iterable<Student> 
         double total = 0;
         int count = 0;
 
-        for (Iterator<Student> it = students.iterator(); it.hasNext();){
+        for (Iterator<Student> it = students.iterator(); it.hasNext(); ) {
             Student student = it.next();
-            if (student.isFullTime()){
+            if (student.isFullTime()) {
                 continue;
             }
             count++;
@@ -115,19 +115,17 @@ abstract public class Session implements Comparable<Session>, Iterable<Student> 
 
     public void setUrl(String urlString) throws SessionException {
         try {
-        this.url =new URL(urlString);
+            this.url = new URL(urlString);
 
-        }catch (MalformedURLException e){
+        } catch (MalformedURLException e) {
             log(e);
             throw new SessionException(e);
         }
     }
 
     private void log(Exception e) {
-
+        e.printStackTrace();
     }
-
-
 }
 
 
