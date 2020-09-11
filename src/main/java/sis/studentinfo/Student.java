@@ -6,6 +6,8 @@ import java.util.logging.Logger;
 
 public class Student {
 
+    public static Logger logger = Logger.getLogger(Student.class.getName());
+
     public enum Grade {
         A(4), B(3), C(2), D(1), F(0);
 
@@ -42,7 +44,7 @@ public class Student {
         final int maximumNumberOfNameParts = 3;
         if (nameParts.size() > maximumNumberOfNameParts) {
             String message = String.format(Student.TOO_MANY_NAME_PARTS_MSG, fullName, MAX_NAME_PARTS);
-            log(message);
+            Student.logger.info(message);
             throw new StudentNameFormatException(message);
         }
         setName(nameParts);

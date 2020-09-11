@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -140,6 +142,10 @@ public class StudentTest {
 
     @Test
     public void testBodyFormattedName(){
+
+        Handler handler = new HandlerTest();
+        Student.logger.addHandler(handler);
+
         final String studentName =  "a b c d";
         try {
             new Student(studentName);
@@ -147,12 +153,12 @@ public class StudentTest {
         }catch (StudentNameFormatException expectedException){
             String message = String.format(Student.TOO_MANY_NAME_PARTS_MSG, studentName, Student.MAX_NAME_PARTS);
             assertEquals(message, expectedException.getMessage());
-            assertTrue(wasLogged(message));
+            assertEquals(message, ((HandlerTest)handler).getMessage());
         }
     }
 
-    private boolean wasLogged(String message){
-        return false;
+    private boolean wasLogged(String message, HandlerTest handler){
+        return message.equals(handler.getMessage());
     }
 }
 
