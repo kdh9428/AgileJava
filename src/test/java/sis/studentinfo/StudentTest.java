@@ -160,5 +160,18 @@ public class StudentTest {
     private boolean wasLogged(String message, HandlerTest handler){
         return message.equals(handler.getMessage());
     }
+
+
+    @Test
+    public void testLoggingHierarchy(){
+        Logger logger = Logger.getLogger("sis.studentinfo.Student");
+        assertTrue(logger == Logger.getLogger("sis.studentinfo.Student"));
+
+        Logger parent = Logger.getLogger("sis.studentinfo");
+        assertEquals(parent, logger.getParent());
+        assertEquals(Logger.getLogger("sis"),parent.getParent());
+
+    }
+
 }
 
