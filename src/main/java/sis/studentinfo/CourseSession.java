@@ -12,28 +12,32 @@ import java.util.*;
 public class CourseSession extends Session {
 
     private static int count;
-    public static CourseSession create(String department, String number, Date startDate){
-        return new CourseSession(department,number,startDate);
-    }
 
-   protected CourseSession(String department, String number, Date startDate) {
-        super(department, number, startDate);
+    //    public static CourseSession create(String department, String number, Date startDate){
+//        return new CourseSession(department,number,startDate);
+//    }
+    public static Session create(Course course, Date startDate) {
         CourseSession.incrementCount();
+        return new CourseSession(course, startDate);
     }
 
-    private static void incrementCount(){
+    protected CourseSession(Course course, Date startDate) {
+        super(course, startDate);
+    }
+
+    private static void incrementCount() {
         ++count;
     }
 
-    static void resetCount(){
+    static void resetCount() {
         count = 0;
     }
 
-    static int getCount(){
+    static int getCount() {
         return count;
     }
 
-    protected int getSessionLength(){
+    protected int getSessionLength() {
         return 16;
     }
 }
