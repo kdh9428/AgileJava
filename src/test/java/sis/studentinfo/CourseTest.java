@@ -14,4 +14,34 @@ class CourseTest {
         assertEquals("120", course.getNumber());
     }
 
+    @Test
+    public void testEquality() {
+        Course courseA = new Course("NURS", "201");
+        Course courseAPrime = new Course("NURS", "201");
+        assertEquals(courseA, courseAPrime);
+
+        Course courseB = new Course("ARTH", "300");
+
+        assertFalse(courseA.equals(courseB));
+
+        //reflexivity
+        assertEquals(courseA, courseA);
+
+        //transitivity
+        Course courseAPrime2 = new Course("NURS", "201");
+        assertEquals(courseA, courseAPrime);
+        assertEquals(courseAPrime, courseAPrime2);
+        assertEquals(courseA, courseAPrime2);
+
+        //symmetry
+        assertEquals(courseAPrime, courseA);
+
+        //consistency
+        assertEquals(courseA, courseAPrime);
+
+        //comparison to null
+        assertFalse(courseA.equals(null));
+
+//        assertSame(courseA, courseAPrime);
+    }
 }

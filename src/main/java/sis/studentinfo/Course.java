@@ -18,4 +18,22 @@ public class Course {
     public String getNumber() {
         return number;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (this.getClass() != obj.getClass())
+            return false;
+
+        if (!(obj instanceof Course))
+            return false;
+
+        Course that = (Course) obj;
+        return this.department.equals(that.department) && this.number.equals(that.number);
+    }
 }
+
