@@ -1,6 +1,7 @@
 package sis.report;
 
 import org.junit.jupiter.api.Test;
+import sis.studentinfo.Course;
 import sis.studentinfo.CourseSession;
 import sis.util.StringUtil;
 
@@ -17,11 +18,17 @@ class CourseReportTest {
         Date date = new Date();
 
         CourseReport report = new CourseReport();
-        report.add(CourseSession.create("ENGL", "101", date));
-        report.add(CourseSession.create("CZEC", "200", date));
-        report.add(CourseSession.create("ITAL", "401", date));
-        report.add(CourseSession.create("CZEC", "220", date));
-        report.add(CourseSession.create("ITAL", "330", date));
+//        report.add(CourseSession.create("ENGL", "101", date));
+//        report.add(CourseSession.create("CZEC", "200", date));
+//        report.add(CourseSession.create("ITAL", "401", date));
+//        report.add(CourseSession.create("CZEC", "220", date));
+//        report.add(CourseSession.create("ITAL", "330", date));
+
+        report.add(create("ENGL", "101", date));
+        report.add(create("CZEC", "200", date));
+        report.add(create("ITAL", "401", date));
+        report.add(create("CZEC", "220", date));
+        report.add(create("ITAL", "330", date));
 
 //        assertEquals("ENGL 101" + StringUtil.NEWLINE +
 //                "CZEC 200" + StringUtil.NEWLINE +
@@ -35,6 +42,10 @@ class CourseReportTest {
                 "ITAL 330" + StringUtil.NEWLINE +
                 "ITAL 401" + StringUtil.NEWLINE, report.text()
         );
+    }
+
+    private CourseSession create(String name, String number, Date date) {
+        return (CourseSession) CourseSession.create(new Course(name, number), date);
     }
 
     @Test
@@ -93,16 +104,20 @@ class CourseReportTest {
     public void testComparable() {
         final Date date = new Date();
 
-        CourseSession sessionA = CourseSession.create("CMSC", "101", date);
-        CourseSession sessionB = CourseSession.create("ENGL", "101", date);
+//        CourseSession sessionA = CourseSession.create("CMSC", "101", date);
+//        CourseSession sessionB = CourseSession.create("ENGL", "101", date);
+        CourseSession sessionA = (CourseSession) CourseSession.create(new Course("CMSC", "101"), date);
+        CourseSession sessionB = (CourseSession) CourseSession.create(new Course("ENGL", "101"), date);
 
         assertTrue(sessionA.compareTo(sessionB) < 0);
         assertTrue(sessionB.compareTo(sessionA) > 0);
 
-        CourseSession sessionC = CourseSession.create("CMSC", "101", date);
+//        CourseSession sessionC = CourseSession.create("CMSC", "101", date);
+        CourseSession sessionC = (CourseSession) CourseSession.create(new Course("CMSC", "101"), date);
         assertEquals(0, sessionA.compareTo(sessionC));
 
-        CourseSession sessionD = CourseSession.create("CMSC", "210", date);
+//        CourseSession sessionD = CourseSession.create("CMSC", "210", date);
+        CourseSession sessionD = (CourseSession) CourseSession.create(new Course("CMSC", "210"), date);
         assertTrue(sessionC.compareTo(sessionD) < 0);
         assertTrue(sessionD.compareTo(sessionC) > 0);
     }

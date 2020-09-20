@@ -1,7 +1,9 @@
 package sis.studentinfo;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,5 +45,16 @@ class CourseTest {
         assertFalse(courseA.equals(null));
 
 //        assertSame(courseA, courseAPrime);
+
+//        List<Course> list = new ArrayList<>();
+//        list.add(courseA);
+//        assertTrue(list.contains(courseAPrime));
+
+        Map<Course, String> map = new HashMap<>();
+        map.put(courseA,"");
+        assertTrue(map.containsKey(courseAPrime));
+
+
+
     }
 }
