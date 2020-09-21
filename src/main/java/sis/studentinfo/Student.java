@@ -22,6 +22,7 @@ public class Student {
         }
     }
 
+    private String id;
     private String name;
     private int credits;
     public static final int CREDITS_REQUIRED_FOR_FULL_TIME = 12;
@@ -178,6 +179,14 @@ public class Student {
                 return false;
         }
         return true;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id){
+        this.id = id;
     }
 //
 //    public static Student findByLastName(String lastName) throws RuntimeException{
