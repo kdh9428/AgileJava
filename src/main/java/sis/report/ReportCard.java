@@ -19,7 +19,7 @@ public class ReportCard {
         return getMessages().get(grade);
     }
 
-    private Map<Student.Grade, String> getMessages() {
+    public Map<Student.Grade, String> getMessages() {
 
         if (messages == null)
             loadMessages();
@@ -35,4 +35,5 @@ public class ReportCard {
         messages.put(Student.Grade.D, D_MESSAGE);
         messages.put(Student.Grade.F, F_MESSAGE);
     }
+
 }
