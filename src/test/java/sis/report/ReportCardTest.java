@@ -34,8 +34,10 @@ public class ReportCardTest {
 
     @Test
     public void testKeys() {
-        Set<Student.Grade> expectedGrades = new HashSet<>();
+//        Set<Student.Grade> expectedGrades = new HashSet<>();
+        Set<Student.Grade> expectedGrades = EnumSet.allOf(Student.Grade.class);
 
+        boolean contains = expectedGrades.contains(Student.Grade.A);
 
         expectedGrades.add(Student.Grade.A);
         expectedGrades.add(Student.Grade.B);
@@ -43,13 +45,16 @@ public class ReportCardTest {
         expectedGrades.add(Student.Grade.D);
         expectedGrades.add(Student.Grade.F);
 
-        Set<Student.Grade> grades = new HashSet<>();
+//        Set<Student.Grade> grades = new HashSet<>();
+        Set<Student.Grade> grades = EnumSet.noneOf(Student.Grade.class);
 
         for (Student.Grade grade : card.getMessages().keySet()) {
             System.out.println(grade);
             grades.add(grade);
         }
         assertEquals(expectedGrades, grades);
+
+
     }
 
     @Test
