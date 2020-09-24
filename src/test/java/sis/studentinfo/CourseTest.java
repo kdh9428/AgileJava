@@ -95,6 +95,26 @@ class CourseTest {
         long stop = System.currentTimeMillis();
         long elapsed = stop - start;
         final long arbitraryThreshold = 200;
-        assertTrue( elapsed < arbitraryThreshold, "elapsed time = " + elapsed);
+        assertTrue(elapsed < arbitraryThreshold, "elapsed time = " + elapsed);
+    }
+
+    @Test
+    public void testToString() {
+        Course course = new Course("ENGL", "301");
+        assertEquals("ENGL 301", course.toString());
+        assertEquals("Course : ENGL 301", "Course : " + course);
+
+        String a = "we have the technology";
+        String b = "we have the technology";
+
+        assertTrue(a.equals(b));
+        assertTrue(a == b);
+
+
+        String c = "we have";
+        c += " the technology";
+        assertTrue(a.equals(c));
+        assertFalse(a == c);
+
     }
 }
