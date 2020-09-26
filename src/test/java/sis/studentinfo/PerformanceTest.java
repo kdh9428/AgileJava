@@ -103,7 +103,45 @@ class PerformanceTest {
         int[] a = {1, 2, 3};
         int[] b = {1, 2, 3};
 
-        assertTrue(Arrays.equals(a,b));
+        assertTrue(Arrays.equals(a, b));
     }
 
+    @Test
+    public void testAverageForNoScores() {
+        Performance performance = new Performance();
+        assertEquals(0.0, performance.average());
+
+//        assertTrue(Double.isNaN(performance.average()));
+
+    }
+
+    @Test
+    public void testNaN() {
+        double a = 0;
+        int b = 0;
+
+        System.out.println(a / b);
+
+        assertFalse(Double.NaN > 0.0);
+        assertFalse(Double.NaN < 1.0);
+        assertFalse(Double.NaN == 1.0);
+        assertFalse(Double.NaN == 0.0);
+
+        assertTrue(Double.isNaN(0.0 / 0));
+
+    }
+
+    @Test
+    public void testInfinity() {
+        final float tolerance = 0.5f;
+        final float x = 1f;
+
+        assertEquals(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY * 100, 2);
+        assertEquals(Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY * -1, tolerance);
+
+        assertEquals(Float.POSITIVE_INFINITY, x / 0f, 2);
+        assertEquals(Float.NEGATIVE_INFINITY, x / -0f, tolerance);
+        assertTrue(Float.isNaN(x % 0f));
+
+    }
 }
