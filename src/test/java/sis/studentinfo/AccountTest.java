@@ -48,8 +48,5 @@ class AccountTest {
         int total = 35;
         int avg = 2;
         assertEquals(17.5,  (double) total / avg);
-
     }
-
-
 }

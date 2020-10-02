@@ -144,4 +144,41 @@ class PerformanceTest {
         assertTrue(Float.isNaN(x % 0f));
 
     }
+
+    @Test
+    public void testOverflow() {
+
+        byte b = Byte.MAX_VALUE;
+        assertEquals(Byte.MAX_VALUE + 1, b + 1);
+        assertEquals(b + 1, 128);
+
+
+        b += 1;
+        assertEquals(Byte.MIN_VALUE, b);
+
+        assertTrue(Double.isInfinite(Double.MAX_VALUE * Double.MAX_VALUE));
+    }
+
+    @Test
+    public void testBinary() {
+        assertEquals(0, 0 & 0);
+        assertEquals(0, 0 & 1);
+        assertEquals(0, 1 & 0);
+        assertEquals(1, 1 & 1);
+
+        assertEquals(0, 0 | 0);
+        assertEquals(1, 0 | 1);
+        assertEquals(1, 1 | 0);
+        assertEquals(1, 1 | 1);
+
+        assertEquals(0, 0 ^ 0);
+        assertEquals(1, 0 ^ 1);
+        assertEquals(1, 1 ^ 0);
+        assertEquals(0, 1 ^ 1);
+
+        int x = 0x7FFFFFF1; //0111 1111 1111 1111 1111 1111 1111 0001
+        assertEquals(0x8000000E, ~x); // 1000 0000 0000 0000 0000 0000 0000 1110
+
+
+    }
 }
