@@ -179,6 +179,5 @@ class PerformanceTest {
         int x = 0x7FFFFFF1; //0111 1111 1111 1111 1111 1111 1111 0001
         assertEquals(0x8000000E, ~x); // 1000 0000 0000 0000 0000 0000 0000 1110
 
-
     }
 }

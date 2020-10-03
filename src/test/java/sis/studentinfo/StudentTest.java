@@ -141,38 +141,75 @@ public class StudentTest {
     }
 
     @Test
-    public void testBodyFormattedName(){
+    public void testBodyFormattedName() {
 
         Handler handler = new HandlerTest();
         Student.logger.addHandler(handler);
 
-        final String studentName =  "a b c d";
+        final String studentName = "a b c d";
         try {
             new Student(studentName);
             fail("expected exception from 4-part name");
-        }catch (StudentNameFormatException expectedException){
+        } catch (StudentNameFormatException expectedException) {
             String message = String.format(Student.TOO_MANY_NAME_PARTS_MSG, studentName, Student.MAX_NAME_PARTS);
             assertEquals(message, expectedException.getMessage());
-            assertEquals(message, ((HandlerTest)handler).getMessage());
+            assertEquals(message, ((HandlerTest) handler).getMessage());
         }
     }
 
-    private boolean wasLogged(String message, HandlerTest handler){
+    private boolean wasLogged(String message, HandlerTest handler) {
         return message.equals(handler.getMessage());
     }
 
 
     @Test
-    public void testLoggingHierarchy(){
+    public void testLoggingHierarchy() {
         Logger logger = Logger.getLogger("sis.studentinfo.Student");
         assertTrue(logger == Logger.getLogger("sis.studentinfo.Student"));
 
         Logger parent = Logger.getLogger("sis.studentinfo");
         assertEquals(parent, logger.getParent());
-        assertEquals(Logger.getLogger("sis"),parent.getParent());
+        assertEquals(Logger.getLogger("sis"), parent.getParent());
 
     }
 
+    @Test
+    public void testFlags() {
+        Student student = new Student("a");
+        student.set(Student.Flag.ON_CAMPUS, Student.Flag.TAX_EXEMPT, Student.Flag.MINOR);
+
+        assertTrue(student.isOn(Student.Flag.ON_CAMPUS));
+        assertTrue(student.isOn(Student.Flag.TAX_EXEMPT));
+        assertTrue(student.isOn(Student.Flag.MINOR));
+
+        assertFalse(student.isOff(Student.Flag.ON_CAMPUS));
+        assertTrue(student.isOff(Student.Flag.TROUBLEMAKER));
+
+        student.unset(Student.Flag.ON_CAMPUS);
+
+        assertTrue(student.isOff(Student.Flag.ON_CAMPUS));
+        assertTrue(student.isOn(Student.Flag.TAX_EXEMPT));
+        assertTrue(student.isOn(Student.Flag.MINOR));
+
+        int x = 5;
+        int y = 7;
+        int xPrime = x ^ y;
+        assertEquals(2, xPrime);
+        assertEquals(x, xPrime ^ y);
+    }
+
+    @Test
+    public void testParity() {
+        assertEquals(0, xorAll(0, 1, 0, 1));
+        assertEquals(1, xorAll(0, 1, 1, 1));
+    }
+
+    private int xorAll(int first, int... rest) {
+        int parity = first;
+        for (int num : rest)
+            parity ^= num;
+        return parity;
+    }
 
 }
 

@@ -22,6 +22,39 @@ public class Student {
         }
     }
 
+    public enum Flag {
+
+        ON_CAMPUS(1), TAX_EXEMPT(2), MINOR(4), TROUBLEMAKER(8);
+
+        private int mask;
+
+        Flag(int mask) {
+            this.mask = mask;
+        }
+    }
+
+    private int settings = 0x0; //1, 2, 4
+
+    public void set(Flag... flags) {
+        System.out.println(3 | 4);
+        for (Flag flag : flags)
+            settings |= flag.mask;
+    }
+
+    public void unset(Flag... flags) {
+        for (Flag flag : flags) {
+            settings &= ~flag.mask;
+        }
+    }
+
+    public boolean isOn(Flag flag) {
+        return (settings & flag.mask) == flag.mask;
+    }
+
+    public boolean isOff(Flag flag) {
+        return !isOn(flag);
+    }
+
     private String id;
     private String name;
     private int credits;
@@ -104,7 +137,7 @@ public class Student {
     public double getGpa() {
 
 
-        Student.logger.fine("begin getGpa "+System.currentTimeMillis());
+        Student.logger.fine("begin getGpa " + System.currentTimeMillis());
         if (grades.isEmpty())
             return 0.0;
         double total = 0.0;
@@ -113,7 +146,7 @@ public class Student {
             total += gradingStrategy.getGradePointsFor(grade);
         }
 
-        Student.logger.fine("end getGpa "+System.currentTimeMillis());
+        Student.logger.fine("end getGpa " + System.currentTimeMillis());
         return total / grades.size();
     }
 
@@ -185,7 +218,7 @@ public class Student {
         return id;
     }
 
-    public void setId(String id){
+    public void setId(String id) {
         this.id = id;
     }
 //
