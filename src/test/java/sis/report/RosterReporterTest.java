@@ -5,6 +5,10 @@ import sis.report.RosterReporter;
 import org.junit.jupiter.api.Test;
 import sis.util.StringUtil;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RosterReporterTest {
@@ -22,8 +26,9 @@ public class RosterReporterTest {
 
         assertEquals("abcd", "ab".concat("cd"));
     }
+
     @Test
-    public void testRosterReport() {
+    public void testRosterReport() throws IOException {
 
 
 //        CourseSession session = CourseSession.create("ENGL", "101", DateUtil.createDate(2003, 1, 6));
@@ -33,10 +38,15 @@ public class RosterReporterTest {
 
         session.enroll(studentA);
         session.enroll(studentB);
-        String rosterReport = new RosterReporter((CourseSession) session).getReport();
+
+        Writer writer = new StringWriter();
+        new RosterReporter(session).writeReport(writer);
+        String rosterReport = writer.toString();
+
+//        String rosterReport = new RosterReporter((CourseSession) session).getReport();
 
         System.out.println(rosterReport);
-        assertEquals(RosterReporter.ROSTER_REPORT_HEADER + "A" + StringUtil.NEWLINE + "B" + StringUtil.NEWLINE +
-                RosterReporter.ROSTER_REPORT_FOOTER + "2" + StringUtil.NEWLINE, rosterReport);
+        assertEquals(String.format(RosterReporter.ROSTER_REPORT_HEADER + "A%n" + "B%n" +
+                RosterReporter.ROSTER_REPORT_FOOTER, 2), rosterReport);
     }
 }
