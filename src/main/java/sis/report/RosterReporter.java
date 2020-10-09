@@ -5,6 +5,8 @@ import sis.studentinfo.Student;
 import sis.studentinfo.CourseSession;
 import sis.util.StringUtil;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 
@@ -72,5 +74,16 @@ public class RosterReporter {
         writeHeader();
         writeBody();
         writeFooter();
+    }
+
+    public void writeReport(String filename) throws IOException {
+
+        Writer bufferedWriter = new BufferedWriter(new FileWriter(filename));
+
+        try {
+            writeReport(bufferedWriter);
+        } finally {
+            bufferedWriter.close();
+        }
     }
 }
