@@ -6,7 +6,9 @@ import sis.studentinfo.*;
 
 import java.io.*;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class RosterReporterTest {
 
@@ -53,19 +55,33 @@ public class RosterReporterTest {
     @Test
     public void testFiledReport() throws IOException {
         final String filename = "testFiledReport.txt";
-        new RosterReporter(session).writeReport(filename);
 
-        StringBuffer buffer = new StringBuffer();
-        String line;
+        try {
+            delete(filename);
+            new RosterReporter(session).writeReport(filename);
 
-        BufferedReader reader = new BufferedReader(new FileReader(filename));
+            StringBuffer buffer = new StringBuffer();
+            String line;
 
-        while ((line = reader.readLine()) != null){
-            buffer.append(String.format(line + "%n"));
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
+
+            while ((line = reader.readLine()) != null){
+                buffer.append(String.format(line + "%n"));
+            }
+
+            reader.close();
+
+            assertReportContents(buffer.toString());
+        }finally {
+            delete(filename);
         }
 
-        reader.close();
-
-        assertReportContents(buffer.toString());
     }
+
+    private void delete(String filename) {
+        File file = new File(filename);
+        if (file.exists())
+            assertTrue("unable to delete " + filename, file.delete());
+    }
+
 }
