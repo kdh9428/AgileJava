@@ -2,8 +2,7 @@ package sis.languageTest.lesson10;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.*;
 import java.util.Arrays;
 
 public class IOEx1 {
@@ -44,8 +43,60 @@ public class IOEx1 {
         output.write(temp, 5, 5);
         outSrc = output.toByteArray();
 
-        System.out.println("Input Source : "+ Arrays.toString(inSrc));
-        System.out.println("temp : "+ Arrays.toString(temp));
-        System.out.println("Output Source : "+ Arrays.toString(outSrc));
+        System.out.println("Input Source : " + Arrays.toString(inSrc));
+        System.out.println("temp : " + Arrays.toString(temp));
+        System.out.println("Output Source : " + Arrays.toString(outSrc));
     }
+
+    @Test
+    public void testIOEx3() {
+
+        byte[] inSrc = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        byte[] outSrc = null;
+        byte[] temp = new byte[4];
+
+        ByteArrayInputStream input = new ByteArrayInputStream(inSrc);
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+
+        System.out.println("Input Source : " + Arrays.toString(inSrc));
+
+        try {
+            while (input.available() > 0) {
+                int len = input.read(temp);
+                output.write(temp, 0, len);
+
+                outSrc = output.toByteArray();
+                printArrays(temp, outSrc);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void printArrays(byte[] temp, byte[] outSrc) {
+        System.out.println("temp : " + Arrays.toString(temp));
+        System.out.println("Output Source : " + Arrays.toString(outSrc));
+    }
+
+    @Test
+    public void testDataOutputStreamEx1() throws FileNotFoundException {
+        FileOutputStream fos = null;
+        DataOutputStream dos = null;
+
+        try {
+            fos = new FileOutputStream("sample.txt");
+            dos = new DataOutputStream(fos);
+
+            dos.writeInt(10);
+            dos.writeFloat(20.0f);
+            dos.writeUTF("test");
+            dos.writeBoolean(true);
+
+            dos.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+
 }
