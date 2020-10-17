@@ -1,5 +1,6 @@
 package sis.languageTest.lesson10;
 
+import com.sun.source.tree.TryTree;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
@@ -84,7 +85,7 @@ public class IOEx1 {
         DataOutputStream dos = null;
 
         try {
-            fos = new FileOutputStream("sample.txt");
+            fos = new FileOutputStream("sample.dat");
             dos = new DataOutputStream(fos);
 
             dos.writeInt(10);
@@ -93,18 +94,18 @@ public class IOEx1 {
             dos.writeBoolean(true);
 
             dos.close();
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void testDataOutputStreamEx02(){
+    public void testDataOutputStreamEx02() {
 
         ByteArrayOutputStream bos = null;
         DataOutputStream dos = null;
 
-        byte[]  result = null;
+        byte[] result = null;
 
         try {
             bos = new ByteArrayOutputStream();
@@ -118,20 +119,104 @@ public class IOEx1 {
 
             String[] hex = new String[result.length];
 
-            for (int i = 0; i < result.length; i++){
-                if (result[i] < 0){
-                    hex[i] = String.format("%02x", result[i]+256);
-                }else {
+            for (int i = 0; i < result.length; i++) {
+                if (result[i] < 0) {
+                    hex[i] = String.format("%02x", result[i] + 256);
+                } else {
                     hex[i] = String.format("%02x", result[i]);
                 }
             }
 
-            System.out.println("10진수 : "+ Arrays.toString(result));
-            System.out.println("16진수 : "+ Arrays.toString(hex));
-        }catch (IOException e){
+            System.out.println("10진수 : " + Arrays.toString(result));
+            System.out.println("16진수 : " + Arrays.toString(hex));
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    @Test
+    public void testDataInputStreamEx01() {
+        try {
+            FileInputStream fis = new FileInputStream("sample.dat");
+            DataInputStream dis = new DataInputStream(fis);
+
+            System.out.println(dis.readInt());
+            System.out.println(dis.readFloat());
+            System.out.println(dis.readUTF());
+            System.out.println(dis.readBoolean());
+            dis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testDataOutputStreamEx3() {
+
+        int[] score = {100, 90, 95, 85, 50};
+
+        try {
+            FileOutputStream fos = new FileOutputStream("score.dat");
+            DataOutputStream dos = new DataOutputStream(fos);
+
+            for (int i = 0; i < score.length; i++) {
+                dos.writeInt(score[i]);
+            }
+            dos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testDataInputStreamEx02() {
+        int sum = 0;
+        int score = 0;
+
+        FileInputStream fis = null;
+        DataInputStream dis = null;
+        try {
+            fis = new FileInputStream("score.dat");
+            dis = new DataInputStream(fis);
+
+            while (true) {
+                score = dis.readInt();
+                System.out.println(score);
+                sum += score;
+            }
+        } catch (EOFException e) {
+            System.out.println("점수의 총합은 " + sum + "입니다.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (dis != null)
+                    dis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    @Test
+    public void testDataInputStreamEx03() {
+        int sum = 0;
+        int score = 0;
+
+        try (FileInputStream fis = new FileInputStream("score.dat");
+             DataInputStream dis = new DataInputStream(fis)) {
+
+            while (true) {
+                score = dis.readInt();
+                System.out.println(score);
+                sum += score;
+            }
+        } catch (EOFException e) {
+            System.out.println("점수의 총 합은 : " + sum + " 입니다.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
