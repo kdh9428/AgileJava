@@ -1,10 +1,12 @@
 package sis.ui;
 
+import org.junit.jupiter.api.Test;
 import sis.studentinfo.Student;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class StudentUI {
 
@@ -20,7 +22,7 @@ public class StudentUI {
 
     private List<Student> students = new ArrayList<>();
 
-    public StudentUI(){
+    public StudentUI() {
         this.reader = new BufferedReader(new InputStreamReader(System.in));
         this.writer = new BufferedWriter(new OutputStreamWriter(System.out));
     }
@@ -33,7 +35,7 @@ public class StudentUI {
             line = reader.readLine();
             if (line.equals(ADD_OPTION))
                 addStudent();
-        }while (!line.equals(QUIT_OPTION));
+        } while (!line.equals(QUIT_OPTION));
     }
 
     private void addStudent() throws IOException {
@@ -58,7 +60,25 @@ public class StudentUI {
         return students;
     }
 
-//    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
 //        new StudentUI().run();
-//    }
+//        try {
+//            int input = 0;
+//            while ((input = System.in.read()) != -1) {
+//                System.out.println("input : " + input + ", (char)input : " + (char) input);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
+        writer.write(MENU, 0, MENU.length());
+        writer.flush();
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        String console = reader.readLine();
+        System.out.println(console);
+
+    }
 }

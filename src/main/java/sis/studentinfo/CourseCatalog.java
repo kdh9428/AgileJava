@@ -22,18 +22,19 @@ public class CourseCatalog {
     }
 
     public void store(String filename) throws IOException {
-        DataOutputStream output = null;
+        ObjectOutputStream output = null;
 
         try {
-            output = new DataOutputStream(new FileOutputStream(filename));
-            output.writeInt(sessions.size());
-
-            for (Session session : sessions){
-                output.writeLong(session.getStartDate().getTime());
-                output.writeInt(session.getNumberOfCredits());
-                output.writeUTF(session.getDepartment());
-                output.writeUTF(session.getNumber());
-            }
+//            output = new DataOutputStream(new FileOutputStream(filename));
+//            output.writeInt(sessions.size());
+//
+//            for (Session session : sessions){
+//                output.writeLong(session.getStartDate().getTime());
+//                output.writeInt(session.getNumberOfCredits());
+//                output.writeUTF(session.getDepartment());
+//                output.writeUTF(session.getNumber());
+            output = new ObjectOutputStream(new FileOutputStream(filename));
+            output.writeObject(sessions);
         }finally {
             output.close();
         }

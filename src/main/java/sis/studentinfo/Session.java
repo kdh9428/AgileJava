@@ -8,7 +8,7 @@ abstract public class Session implements Comparable<Session>, Iterable<Student> 
 
 
     private static int count;
-//    private String department;
+    private String department;
 //    private String number;
     private Course course;
     private List<Student> students = new ArrayList<>();
@@ -35,6 +35,10 @@ abstract public class Session implements Comparable<Session>, Iterable<Student> 
 
     public void setNumberOfCredits(int numberOfCredits) {
         this.numberOfCredits = numberOfCredits;
+    }
+
+    public int getNumberOfCredits() {
+        return numberOfCredits;
     }
 
     public int getNumberOfStudents() {
@@ -126,6 +130,8 @@ abstract public class Session implements Comparable<Session>, Iterable<Student> 
     private void log(Exception e) {
         e.printStackTrace();
     }
+
+
 
 }
 
