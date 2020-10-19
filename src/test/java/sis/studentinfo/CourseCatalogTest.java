@@ -35,7 +35,7 @@ class CourseCatalogTest {
     }
 
     @Test
-    public void testStoreAndLoad() throws IOException {
+    public void testStoreAndLoad() throws Exception {
         final String filename = "CourseCatalogTest.testAdd.txt";
         catalog.store(filename);
         catalog.clearAll();

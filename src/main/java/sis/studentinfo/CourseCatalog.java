@@ -40,25 +40,31 @@ public class CourseCatalog {
         }
     }
 
-    public void load(String filename) throws IOException {
-        DataInputStream input = null;
+    public void load(String filename) throws IOException, ClassNotFoundException {
+//        DataInputStream input = null;
+
+        ObjectInputStream input = null;
 
         try {
-            input = new DataInputStream(new FileInputStream(filename));
-            int numberOfSessions = input.readInt();
-            for (int i = 0; i < numberOfSessions; i++){
-                Date startDate = new Date(input.readLong());
-                int credits = input.readInt();
-                String department = input.readUTF();
-                String number = input.readUTF();
-                Course course = new Course(department, number);
 
-                System.out.println("department : " + department +", number : " +  number + credits);
+            input = new ObjectInputStream(new FileInputStream(filename));
+            sessions = (List<Session>) input.readObject();
 
-                Session session = CourseSession.create(course, startDate);
-                session.setNumberOfCredits(credits);
-                sessions.add(session);
-            }
+//            input = new DataInputStream(new FileInputStream(filename));
+//            int numberOfSessions = input.readInt();
+//            for (int i = 0; i < numberOfSessions; i++){
+//                Date startDate = new Date(input.readLong());
+//                int credits = input.readInt();
+//                String department = input.readUTF();
+//                String number = input.readUTF();
+//                Course course = new Course(department, number);
+//
+//                System.out.println("department : " + department +", number : " +  number + credits);
+//
+//                Session session = CourseSession.create(course, startDate);
+//                session.setNumberOfCredits(credits);
+//                sessions.add(session);
+
         }finally {
             input.close();
         }
