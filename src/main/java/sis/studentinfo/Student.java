@@ -1,8 +1,13 @@
 package sis.studentinfo;
 
+import java.io.Closeable;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+
+import static java.sql.DriverManager.getConnection;
 
 public class Student {
 
@@ -221,7 +226,7 @@ public class Student {
     public void setId(String id) {
         this.id = id;
     }
-//
+
 //    public static Student findByLastName(String lastName) throws RuntimeException{
 //        Connection dbConnection = null;
 //        try {
@@ -233,4 +238,11 @@ public class Student {
 //            close((Closeable) dbConnection);
 //        }
 //}
+
+    public static Student findByLastName(String lastName) throws RuntimeException{
+
+        System.out.println(lastName);
+
+        return new Student("a");
+    }
 }

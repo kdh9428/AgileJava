@@ -29,6 +29,7 @@ class CourseCatalogTest {
 
         session2 = CourseSession.create(course2, DateUtil.createDate(1, 17, 2005));
         session2.setNumberOfCredits(5);
+        session2.enroll(new Student("a"));
 
         catalog.add(session1);
         catalog.add(session2);
@@ -47,6 +48,18 @@ class CourseCatalogTest {
 
         assertSession(session1, sessions.get(0));
         assertSession(session2, sessions.get(1));
+
+
+        Session session = sessions.get(1);
+        assertSession(session2, session);
+//        session.readObject();
+
+        session.enroll(new Student("a"));
+        session.enroll(new Student("a"));
+
+        Student student = session.getAllStudents().get(1);
+
+        assertEquals("a", student.getName());
     }
 
     private void assertSession(Session expected, Session retrieved) {
@@ -57,5 +70,4 @@ class CourseCatalogTest {
         assertEquals(expected.getDepartment(), retrieved.getDepartment());
         assertEquals(expected.getNumber(), retrieved.getNumber());
     }
-
 }

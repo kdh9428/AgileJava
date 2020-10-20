@@ -65,6 +65,7 @@ public class CourseCatalog {
 //                session.setNumberOfCredits(credits);
 //                sessions.add(session);
 
+
         }finally {
             input.close();
         }
