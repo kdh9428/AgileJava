@@ -4,8 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,7 +19,7 @@ public class DataFileTest {
     private TestData testData2;
 
     @BeforeEach
-    void setUp() throws IOException{
+    void setUp() throws IOException {
         db = DataFile.create(FILE_BASE);
 
         assertEquals(0, db.size());
@@ -70,13 +69,14 @@ public class DataFileTest {
     }
 
 
-    private void assertTestDataEquals(TestData expected, TestData actual){
+    private void assertTestDataEquals(TestData expected, TestData actual) {
 
         assertEquals(expected.id, actual.id);
         assertEquals(expected.field1, actual.field1);
         assertEquals(expected.field2, actual.field2);
     }
-    static class TestData implements Serializable{
+
+    static class TestData implements Serializable {
         String id;
         String field1;
         int field2;
@@ -86,6 +86,41 @@ public class DataFileTest {
             this.field1 = field1;
             this.field2 = field2;
         }
+    }
+
+
+    @Test
+    public void testRandomAccessFile() throws IOException {
+        //일반 파일을 불러올 경우
+
+        //읽어들일 사이즈를 정한다.
+        int seekSize = 5;
+
+        RandomAccessFile accessFile = new RandomAccessFile("test.txt", "r");
+
+        String line = "";
+
+        while ((line = accessFile.readLine()) != null) {
+            System.out.println("전체 문자열 : " + line);
+        }
+
+        System.out.println("문자열의 총 길이 : " + accessFile.length() + "\n");
+
+        byte[] dataFile = null;
+
+        long size = accessFile.length() / seekSize + (accessFile.length() % seekSize == 0 ? 0 : 1);
+
+        for (int i = 0; i < size; i++) {
+
+            dataFile = new byte[seekSize];
+
+            accessFile.seek(i * seekSize);
+            accessFile.read(dataFile);
+
+            System.out.printf("pointer : %02d str : %s \n", accessFile.getFilePointer(), new String(dataFile).trim());
+        }
+
+        accessFile.close();
     }
 }
 
