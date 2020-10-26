@@ -29,7 +29,7 @@ public class DataFileTest {
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown() throws IOException {
         db.close();
         db.deleteFiles();
     }

@@ -18,7 +18,7 @@ class KeyFileTest {
     private KeyFile keyFile;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         TestUtil.delete(FILENAME);
         keyFile = new KeyFile(FILENAME);
     }
@@ -48,13 +48,14 @@ class KeyFileTest {
 
     @Test
     public void testReopen() throws IOException {
-        keyfile.add(KEY, POSITION, LENGTH);
+        keyFile.add(KEY, POSITION, LENGTH);
 
         keyFile.close();
 
         keyFile = new KeyFile(FILENAME);
         assertEquals(1, keyFile.size());
-        assertEquals(POSITION, keyfile.getPosition(KEY));
+        assertEquals(POSITION, keyFile.getPosition(KEY));
         assertEquals(LENGTH, keyFile.getLength(KEY));
     }
+
 }

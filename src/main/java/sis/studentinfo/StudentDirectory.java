@@ -1,5 +1,7 @@
 package sis.studentinfo;
 
+import sis.db.DataFile;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,14 +16,14 @@ public class StudentDirectory {
         db = DataFile.open(DIR_BASENAME);
     }
 
-    public void add(Student student) {
+    public void add(Student student) throws IOException {
 
         db.add(student.getId(), student);
 //        students.put(student.getId(), student);
 
     }
 
-    public Student findById(String id) {
+    public Student findById(String id) throws IOException {
 //        return students.get(id);
         return (Student) db.findBy(id);
     }
