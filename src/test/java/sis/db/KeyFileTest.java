@@ -2,6 +2,7 @@ package sis.db;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import sis.util.TestUtil;
 
 import java.io.IOException;
 
