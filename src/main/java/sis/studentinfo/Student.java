@@ -1,6 +1,7 @@
 package sis.studentinfo;
 
 import java.io.Closeable;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.logging.Logger;
 
 import static java.sql.DriverManager.getConnection;
 
-public class Student {
+public class Student implements Serializable {
 
     public static Logger logger = Logger.getLogger(Student.class.getName());
 
@@ -184,8 +185,6 @@ public class Student {
         List<String> results = new ArrayList<>();
 
         for (String name : fullName.split(" ")) {
-
-            System.out.println(name);
             results.add(name);
         }
 
@@ -239,7 +238,7 @@ public class Student {
 //        }
 //}
 
-    public static Student findByLastName(String lastName) throws RuntimeException{
+    public static Student findByLastName(String lastName) throws RuntimeException {
 
         System.out.println(lastName);
 

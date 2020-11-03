@@ -1,5 +1,6 @@
 package sis.studentinfo;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -7,6 +8,29 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AccountTest {
+
+    static final String ABA = "102000012";
+    static final String ACCOUNT_NUMBER = "194431518811";
+
+    private Account account;
+
+    @BeforeEach
+    void setUp() {
+        account = new Account();
+        account.setBankAba(ABA);
+        account.setBankAccountNumber(ACCOUNT_NUMBER);
+        account.setBankAccountType(Account.BankAccountType.CHECKING);
+    }
+
+    @Test
+    public void testTransferFromBank(){
+//        account.setAch(new com.jimbob.ach.JimBobAch());
+        account.setAch(new MockAch());
+        final BigDecimal amount = new BigDecimal("50.00");
+        account.transferFromBank(amount);
+
+        assertEquals(amount, account.getBalance());
+    }
 
     @Test
     public void testTransactions() {

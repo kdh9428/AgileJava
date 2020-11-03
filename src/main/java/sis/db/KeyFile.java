@@ -57,7 +57,7 @@ public class KeyFile {
         }
     }
 
-    static class EntryData implements Serializable {
+    public static class EntryData implements Serializable {
         private long position;
         private int length;
 
