@@ -61,7 +61,7 @@ public class Account {
         this.bankAccountType = bankAccountType;
     }
 
-    public void transFerFromBank(BigDecimal amount){
+    public void transferFromBank(BigDecimal amount){
         AchCredentials credentials = createCredentials();
 
         AchTransactionData data = createData(amount);
@@ -70,6 +70,7 @@ public class Account {
 
         AchResponse achResponse = ach.issueDebit(credentials, data);
 
+        System.out.println(achResponse.status);
         credit(amount);
     }
 
@@ -94,7 +95,7 @@ public class Account {
     private Ach getAch(){
         return ach;
     }
-    private void setAch(Ach ach){
+    public void setAch(Ach ach){
         this.ach = ach;
     }
 }

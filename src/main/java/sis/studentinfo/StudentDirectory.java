@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StudentDirectory {
-
-    private Map<String, Student> students = new HashMap<>();
     private static final String DIR_BASENAME = "studentDir";
     private DataFile db;
 

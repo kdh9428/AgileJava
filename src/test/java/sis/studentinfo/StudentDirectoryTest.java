@@ -12,7 +12,7 @@ class StudentDirectoryTest {
     private StudentDirectory dir;
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws IOException {
         dir = new StudentDirectory();
     }
 
@@ -51,9 +51,14 @@ class StudentDirectoryTest {
     }
 
     private void verifyStudentLookup(StudentDirectory directory, int i) throws IOException {
-        String id = "" + i;
+        String id = Integer.toString(i);
         Student student = directory.findById(id);
-        assertEquals(id, student.getLastName());
+        System.out.println("===============");
+        String lastName = student.getLastName();
+        System.out.println(lastName);
+        System.out.println(directory);
+
+        assertEquals(0, student.getLastName());
         assertEquals(id, student.getId());
         assertEquals(i, student.getCredits());
     }
@@ -65,8 +70,5 @@ class StudentDirectoryTest {
         student.setId(id);
         student.addCredits(i);
         directory.add(student);
-
     }
-
-
 }

@@ -1,5 +1,7 @@
 package sis.db;
 
+import sis.ui.IOUtil;
+
 import java.io.*;
 
 public class DataFile {
@@ -68,6 +70,12 @@ public class DataFile {
         IOUtil.delete(dataFilename, keyFilename);
     }
 
+    private Object read(int length) throws IOException {
+        byte[] bytes = new byte[length];
+        db.readFully(bytes);
+        return readObject(bytes);
+    }
+
     private Object readObject(byte[] bytes) throws IOException {
         ObjectInputStream input = new ObjectInputStream(new ByteArrayInputStream(bytes));
 
@@ -95,5 +103,4 @@ public class DataFile {
         outputStream.flush();
         return byteStream.toByteArray();
     }
-
 }

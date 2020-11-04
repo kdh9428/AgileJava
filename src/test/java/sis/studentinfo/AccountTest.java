@@ -1,9 +1,11 @@
 package sis.studentinfo;
 
+import com.jimbob.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,7 +27,47 @@ class AccountTest {
     @Test
     public void testTransferFromBank(){
 //        account.setAch(new com.jimbob.ach.JimBobAch());
-        account.setAch(new MockAch());
+
+        Ach mockAch = new Ach() {
+            @Override
+            public AchResponse issueDebit(AchCredentials credentials, AchTransactionData data) {
+
+                assertEquals(data.account, AccountTest.ACCOUNT_NUMBER);
+                assertEquals(data.aba, AccountTest.ABA);
+
+                AchResponse response = new AchResponse();
+                response.timestamp = new Date();
+                response.traceCode = "1";
+                response.status = AchStatus.SUCCESS;
+                return response;
+            }
+
+            @Override
+            public AchResponse markTransactionAsNSF(AchCredentials achCredentials, AchTransactionData data, String traceCode) {
+                return null;
+            }
+
+            @Override
+            public AchResponse refundTransaction(AchCredentials credentials, AchTransactionData data, String traceCode) {
+                return null;
+            }
+
+            @Override
+            public AchResponse issueCredit(AchCredentials credentials, AchTransactionData data) {
+                return null;
+            }
+
+            @Override
+            public AchResponse voidSameDayTransaction(AchCredentials credentials, AchTransactionData data, String traceCode) {
+                return null;
+            }
+
+            @Override
+            public AchResponse queryTransactionStatus(AchCredentials credentials, AchTransactionData data, String traceCode) {
+                return null;
+            }
+        };
+        account.setAch(mockAch);
         final BigDecimal amount = new BigDecimal("50.00");
         account.transferFromBank(amount);
 
@@ -40,6 +82,7 @@ class AccountTest {
         assertEquals(new BigDecimal("11.10"), account.getBalance());
 
         assertEquals(new BigDecimal("5.300"), new BigDecimal("5.000").add(new BigDecimal("0.3")));
+
     }
 
     @Test
