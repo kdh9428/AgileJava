@@ -25,10 +25,10 @@ class AccountTest {
     }
 
     @Test
-    public void testTransferFromBank(){
+    public void testTransferFromBank() {
 //        account.setAch(new com.jimbob.ach.JimBobAch());
 
-        Ach mockAch = new MockAch(){
+        Ach mockAch = new MockAch() {
             @Override
             public AchResponse issueDebit(AchCredentials credentials, AchTransactionData data) {
 
@@ -39,7 +39,6 @@ class AccountTest {
                 response.timestamp = new Date();
                 response.traceCode = "1";
                 response.status = AchStatus.SUCCESS;
-
                 return response;
             }
         };
@@ -49,6 +48,33 @@ class AccountTest {
         account.transferFromBank(amount);
 
         assertEquals(amount, account.getBalance());
+    }
+
+    @Test
+    public void testFailedTransferFromBank() {
+        account.setAch(createMockAch(AchStatus.FAILURE));
+        final BigDecimal amount = new BigDecimal("50.00");
+        account.transferFromBank(amount);
+        assertEquals(new BigDecimal("0.00"), account.getBalance());
+    }
+
+    @Test
+    public Ach createMockAch(AchStatus status) {
+
+        return new MockAch() {
+            @Override
+            public AchResponse issueDebit(AchCredentials achCredentials, AchTransactionData data) {
+
+                assertTrue(data.account.equals(AccountTest.ACCOUNT_NUMBER));
+                assertTrue(data.aba.equals(AccountTest.ABA));
+
+                AchResponse response = new AchResponse();
+                response.timestamp = new Date();
+                response.traceCode = "1";
+                response.status = status;
+                return response;
+            }
+        };
     }
 
     @Test
@@ -91,6 +117,6 @@ class AccountTest {
 
         int total = 35;
         int avg = 2;
-        assertEquals(17.5,  (double) total / avg);
+        assertEquals(17.5, (double) total / avg);
     }
 }

@@ -1,6 +1,9 @@
 package sis.studentinfo;
 
-import java.lang.reflect.Proxy;
+import sis.security.Permission;
+import sis.security.SecureProxy;
+
+import java.lang.reflect.*;
 
 public class AccountFactory {
 

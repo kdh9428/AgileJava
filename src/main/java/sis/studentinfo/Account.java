@@ -1,14 +1,11 @@
 package sis.studentinfo;
 
-import com.jimbob.Ach;
-import com.jimbob.AchCredentials;
-import com.jimbob.AchResponse;
-import com.jimbob.AchTransactionData;
+import com.jimbob.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class Account {
+public class Account implements Accountable {
 
     private BigDecimal balance = new BigDecimal("0.00");
     private int transactionCount = 0;
@@ -70,8 +67,10 @@ public class Account {
 
         AchResponse achResponse = ach.issueDebit(credentials, data);
 
+        if (achResponse.status == AchStatus.SUCCESS)
+            credit(amount);
+
         System.out.println(achResponse.status);
-        credit(amount);
     }
 
     private AchCredentials createCredentials(){

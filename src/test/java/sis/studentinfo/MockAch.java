@@ -9,17 +9,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class MockAch implements Ach {
     @Override
     public AchResponse issueDebit(AchCredentials achCredentials, AchTransactionData data) {
-//        assertTrue(data.account.equals(AccountTest.ACCOUNT_NUMBER));
-//
-//        assertTrue(data.aba.equals(AccountTest.ABA));
-//
-//        AchResponse response = new AchResponse();
-//        response.timestamp = new Date();
-//        response.traceCode = "1";
-//
-//        response.status = AchStatus.SUCCESS;
-//        return response;
-        return null;
+        assertTrue(data.account.equals(AccountTest.ACCOUNT_NUMBER));
+
+        System.out.println("MockAch 인터페이스 확인");
+        assertTrue(data.aba.equals(AccountTest.ABA));
+
+        AchResponse response = new AchResponse();
+        response.timestamp = new Date();
+        response.traceCode = "1";
+
+        response.status = AchStatus.SUCCESS;
+        return response;
     }
 
     @Override

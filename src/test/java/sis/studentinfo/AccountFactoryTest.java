@@ -2,7 +2,10 @@ package sis.studentinfo;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import sis.security.Permission;
+import sis.security.PermissionException;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -19,7 +22,7 @@ public class AccountFactoryTest {
     private List<Method> readOnlyMethods;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         updateMethods = new ArrayList<>();
 
         addUpdateMethod("setBankAba", String.class);
@@ -32,15 +35,16 @@ public class AccountFactoryTest {
         addReadOnlyMethod("getBalance");
         addReadOnlyMethod("transactionAverage");
 
+
     }
 
-    private void addUpdateMethod(String name, Class parmClass) {
+    private void addUpdateMethod(String name, Class parmClass) throws Exception {
 
 
         updateMethods.add(Accountable.class.getDeclaredMethod(name, parmClass));
     }
 
-    private void addReadOnlyMethod(String name) {
+    private void addReadOnlyMethod(String name) throws Exception {
         Class[] noParms = new Class[]{};
 
         readOnlyMethods.add(Accountable.class.getDeclaredMethod(name, noParms));
@@ -48,7 +52,7 @@ public class AccountFactoryTest {
 
     @Test
     public void testUpdateAccess() throws Exception {
-        Accountalbe account = AccountFactory.create(Permission.UPDATE);
+        Accountable account = AccountFactory.create(Permission.UPDATE);
 
         for (Method method : readOnlyMethods)
             verifyNoException(method, account);
@@ -59,13 +63,41 @@ public class AccountFactoryTest {
 
     @Test
     public void testReadOnlyAccess() throws Exception {
-        Accountable accout = AccountFactory.create(Permission.READ_ONLY);
+        Accountable account = AccountFactory.create(Permission.READ_ONLY);
 
         for (Method method : updateMethods)
-            verifyException(PermissionException.class, method, accout);
+            verifyException(PermissionException.class, method, account);
 
         for (Method method : readOnlyMethods)
             verifyNoException(method, account);
+    }
+
+    @Test
+    public void testReflect(){
+        try {
+
+            Class cls = Class.forName("A");
+
+
+
+            boolean b1 = cls.isInstance(new Integer(37));
+
+            System.out.println(b1);
+
+
+
+            boolean b2 = cls.isInstance(new A());
+
+            System.out.println(b2);
+
+
+
+        } catch (Throwable e) {
+
+            System.err.println("에러 : " +e);
+
+        }
+
     }
 
     private void verifyException(Class exceptionType, Method method, Object object) throws Exception {
@@ -91,4 +123,9 @@ public class AccountFactoryTest {
     private Object[] nullParmsFor(Method method){
         return new Object[method.getParameterTypes().length];
     }
+
+    class A {
+    }
 }
+
+
