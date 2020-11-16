@@ -58,8 +58,9 @@ public class Search {
         try {
             reader = new BufferedReader(new InputStreamReader(input));
             String line;
-            while ((line = reader.readLine()) != null)
+            while ((line = reader.readLine()) != null){
                 matches += StringUtil.occurrences(line, searchString);
+            }
         }finally {
             if (reader != null){
                 reader.close();
