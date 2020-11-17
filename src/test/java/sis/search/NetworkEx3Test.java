@@ -2,6 +2,10 @@ package sis.search;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -39,6 +43,52 @@ public class NetworkEx3Test {
             System.out.println("getUseCaches() : " + connection.getUseCaches());
         } catch (Exception e) {
 
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testNetwork01() {
+        URL url;
+        BufferedReader input;
+        String address = "https://www.dahunkim.xyz";
+        String line = "";
+
+        try {
+
+            url = new URL(address);
+            input = new BufferedReader(new InputStreamReader(url.openStream()));
+
+            while ((line = input.readLine()) != null) {
+                System.out.println(line);
+            }
+            input.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testNetwork02(){
+        URL url;
+        InputStream inputStream;
+        FileOutputStream fileStream;
+
+        String address = "https://www.codechobo.com/book/src/javajungsuk3_src.zip";
+
+        int ch = 0;
+
+        try {
+            url = new URL(address);
+            inputStream = url.openStream();
+            fileStream = new FileOutputStream("javajungsuk3_src.zip");
+
+            while ((ch = inputStream.read()) != -1){
+                fileStream.write(ch);
+            }
+            inputStream.close();
+            fileStream.close();
+        }catch (Exception e){
             e.printStackTrace();
         }
     }

@@ -1,9 +1,8 @@
 package sis.studentinfo;
 
-import com.sun.source.tree.CaseTree;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HonorsGradingStrategyTest {
     enum Score{

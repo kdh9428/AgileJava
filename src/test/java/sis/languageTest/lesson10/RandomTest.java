@@ -1,6 +1,5 @@
 package sis.languageTest.lesson10;
 
-import com.sun.source.tree.AssertTree;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
