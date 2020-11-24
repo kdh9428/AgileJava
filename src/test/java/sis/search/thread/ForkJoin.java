@@ -43,7 +43,7 @@ class SumTask extends RecursiveTask<Long> {
     @Override
     protected Long compute() {
         long size = to - from + 1; // from <= i <= to
-        if (size <= 5)
+        if (size <= 2)
             return sum();
 
         long half = (from + to) / 2;
@@ -52,14 +52,17 @@ class SumTask extends RecursiveTask<Long> {
         SumTask rightSum = new SumTask(half + 1, to);
 
         leftSum.fork();
+//        Long i = leftSum.join();
         long l = rightSum.compute() + leftSum.join();
+//        System.out.println("leftSum Join : "+ i);
+//        System.out.println("rightSum compute : "+ l);
 
         return l;
     }
 
     long sum() {
         long tmp = 0L;
-
+//        System.out.println(Thread.currentThread().getName());
         for (long i = from; i <= to; i++) {
             tmp += i;
         }
