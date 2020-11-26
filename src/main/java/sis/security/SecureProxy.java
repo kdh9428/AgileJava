@@ -6,7 +6,6 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class SecureProxy implements InvocationHandler {
 
     private List<String> secureMethods;

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import sis.security.Permission;
 import sis.security.PermissionException;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -75,7 +76,7 @@ public class AccountFactoryTest {
     public void testReflect(){
         try {
 
-            Class cls = Class.forName("sis.studentinfo.A");
+            Class cls = Class.forName("A");
 
 
 
@@ -102,7 +103,7 @@ public class AccountFactoryTest {
     private void verifyException(Class exceptionType, Method method, Object object) throws Exception {
 
         try {
-            method.invoke(object, nullParamsFor(method));
+            method.invoke(object, nullParmsFor(method));
             fail("expected exception");
         } catch (InvocationTargetException e) {
             assertEquals("expected exception", exceptionType, e.getCause().getClass());
@@ -112,16 +113,15 @@ public class AccountFactoryTest {
     private void verifyNoException(Method method, Object object) throws Exception {
 
         try {
-            method.invoke(object, nullParamsFor(method));
+            method.invoke(object, nullParmsFor(method));
         }catch (InvocationTargetException e ){
             assertFalse("unexpected permission exception", PermissionException.class == e.getCause().getClass() );
         }
     }
 
 
-    private Object[] nullParamsFor(Method method){
-        Object[] objects = new Object[method.getParameterTypes().length];
-        return objects;
+    private Object[] nullParmsFor(Method method){
+        return new Object[method.getParameterTypes().length];
     }
 
     class A {
