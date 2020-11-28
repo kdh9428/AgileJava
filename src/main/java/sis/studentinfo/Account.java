@@ -15,6 +15,12 @@ public class Account implements Accountable {
     private BankAccountType bankAccountType;
     private Ach ach;
 
+    public void withdraw(BigDecimal amount) {
+        if (amount.compareTo(balance) > 0)
+            return;
+        balance = balance.subtract(amount);
+    }
+
 
     public enum BankAccountType {
         CHECKING("ck"), SAVINGS("sv");
