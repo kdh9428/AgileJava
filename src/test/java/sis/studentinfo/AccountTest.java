@@ -119,4 +119,20 @@ class AccountTest {
         int avg = 2;
         assertEquals(17.5, (double) total / avg);
     }
+
+    @Test
+    public void testWithdraw() throws Exception {
+        account.credit(new BigDecimal("100.00"));
+        account.withdraw(new BigDecimal("40.00"));
+
+        assertEquals(new BigDecimal("60.00"), account.getBalance());
+    }
+
+    @Test
+    public void testWithInsufficientFunds() {
+        account.credit(new BigDecimal("100.00"));
+        account.withdraw(new BigDecimal("140.00"));
+
+        assertEquals(new BigDecimal("100.00"), account.getBalance());
+    }
 }
