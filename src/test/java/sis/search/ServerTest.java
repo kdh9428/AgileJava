@@ -33,7 +33,11 @@ class ServerTest {
     }
 
     @AfterEach
-    void beforeAll() {
+    void tearDown() throws Exception {
+        assertTrue(server.isAlive());
+        server.shutDown();
+        server.join(3000);
+        assertFalse(server.isAlive());
         TestUtil.delete(SearchTest.FILE);
     }
 

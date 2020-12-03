@@ -15,9 +15,15 @@ public class Account implements Accountable {
     private BankAccountType bankAccountType;
     private Ach ach;
 
-    public void withdraw(BigDecimal amount) {
+    public synchronized void withdraw(BigDecimal amount) {
         if (amount.compareTo(balance) > 0)
             return;
+
+        try {
+            Thread.sleep(1);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
         balance = balance.subtract(amount);
     }
 

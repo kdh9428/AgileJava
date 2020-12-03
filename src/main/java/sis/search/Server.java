@@ -1,11 +1,15 @@
 package sis.search;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Server extends Thread {
 
-    private List<Search> queue = new LinkedList<>(); //문제 발생
+    private BlockingQueue<Search> queue = new LinkedBlockingQueue<>();
+
     private ResultsListener listener;
 
     public Server(ResultsListener listener) {
@@ -17,14 +21,22 @@ public class Server extends Thread {
     public void run() {
 
         while (true) {
-            if (!queue.isEmpty())
-                execute(queue.remove(0));
-            Thread.yield(); //백그라운드 쓰레드가 실행되기 전에 다른 쓰레드가 프로세서를 사용하도록 허용한다.
+            try {
+                execute(queue.take());
+            }catch (InterruptedException e){
+                e.printStackTrace();
+                break;
+            }
         }
     }
 
-    public void add(Search search) {
-        queue.add(search);
+    public void shutDown() throws Exception{
+
+        this.interrupt();
+    }
+
+    public void add(Search search) throws Exception {
+        queue.put(search);
     }
 
     private void execute(Search search) {
