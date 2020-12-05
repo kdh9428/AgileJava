@@ -31,7 +31,6 @@ public class Clock implements Runnable {
 
             long now = System.currentTimeMillis();
 
-
             long l = (now / 1000) - (lastTime / 1000);
             System.out.println("시간측정: " + now);
             System.out.println("계산 : "+ l);
