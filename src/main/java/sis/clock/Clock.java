@@ -18,7 +18,7 @@ public class Clock implements Runnable {
 
     @Override
     public void run() {
-
+        Thread.currentThread().setPriority(Thread.NORM_PRIORITY - 1);
         long lastTime = System.currentTimeMillis();
         System.out.println(lastTime);
         while (run) {
@@ -33,8 +33,8 @@ public class Clock implements Runnable {
 
             long l = (now / 1000) - (lastTime / 1000);
             System.out.println("시간측정: " + now);
-            System.out.println("계산 : "+ l);
-            if ((now / 1000) - (lastTime / 1000) >= 1){
+            System.out.println("계산 : " + l);
+            if ((now / 1000) - (lastTime / 1000) >= 1) {
                 listener.update(new Date(now));
                 lastTime = now;
             }
