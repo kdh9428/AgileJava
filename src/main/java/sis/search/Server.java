@@ -8,7 +8,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class Server extends Thread {
 
-    private BlockingQueue<Search> queue = new LinkedBlockingQueue<>();
+    private BlockingQueue<Search> queue = new LinkedBlockingQueue<Search>();
 
     private ResultsListener listener;
 
@@ -23,15 +23,13 @@ public class Server extends Thread {
         while (true) {
             try {
                 execute(queue.take());
-            }catch (InterruptedException e){
-                e.printStackTrace();
+            } catch (InterruptedException e) {
                 break;
             }
         }
     }
 
-    public void shutDown() throws Exception{
-
+    public void shutDown() throws Exception {
         this.interrupt();
     }
 
@@ -40,8 +38,12 @@ public class Server extends Thread {
     }
 
     private void execute(Search search) {
-        search.execute();
-        listener.executed(search);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                search.execute();
+                listener.executed(search);
+            }
+        }).start();
     }
-
 }
